@@ -41,12 +41,19 @@ function starCell(channel) {
   return channel.isStarred ? '<span class="star-badge" title="后台已星标">星标</span>' : '<span class="muted">-</span>';
 }
 
+function sourceCell(channel) {
+  return channel.balanceSource === "upstream"
+    ? '<span class="tag ok" title="已登录上游站点实时读取余额">上游实时</span>'
+    : '<span class="tag neutral" title="使用监测后台同步的余额">后台同步</span>';
+}
+
 function rowForLow(channel) {
   return `
     <tr>
       <td>${channelName(channel)}</td>
       <td>${starCell(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
+      <td>${sourceCell(channel)}</td>
       <td class="mono">${formatMoney(channel.threshold)}</td>
       <td class="muted">${formatTime(channel.lastSyncedAt)}</td>
     </tr>
@@ -61,6 +68,7 @@ function rowForAll(channel) {
       <td>${channelName(channel)}</td>
       <td>${starCell(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
+      <td>${sourceCell(channel)}</td>
       <td class="mono">${channel.tokenCount ?? "-"}</td>
       <td><span class="tag ${tagClass}">${tagText}</span></td>
     </tr>
@@ -105,8 +113,8 @@ function render(data) {
   }
 
   els.alertNote.textContent = lowChannels.length > 0 ? "星标渠道会优先显示和提醒" : "当前没有低余额渠道";
-  els.lowTable.innerHTML = lowChannels.length ? sortChannels(lowChannels).map(rowForLow).join("") : '<tr><td colspan="5">当前没有低余额渠道。</td></tr>';
-  els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="5">暂无渠道数据。</td></tr>';
+  els.lowTable.innerHTML = lowChannels.length ? sortChannels(lowChannels).map(rowForLow).join("") : '<tr><td colspan="6">当前没有低余额渠道。</td></tr>';
+  els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="6">暂无渠道数据。</td></tr>';
 }
 
 fetch("status.json", { cache: "no-store" })
@@ -123,6 +131,6 @@ fetch("status.json", { cache: "no-store" })
     els.low.textContent = "-";
     els.threshold.textContent = "30 元";
     els.checkedAt.textContent = "-";
-    els.lowTable.innerHTML = '<tr><td colspan="5">等待第一次检查结果。</td></tr>';
-    els.allTable.innerHTML = '<tr><td colspan="5">等待第一次检查结果。</td></tr>';
+    els.lowTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
+    els.allTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
   });

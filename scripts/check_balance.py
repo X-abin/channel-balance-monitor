@@ -11,6 +11,7 @@ from urllib import error, parse, request
 BASE_URL = os.getenv("UPTIME_BASE_URL", "https://uptime.maolaoapi.com").rstrip("/")
 THRESHOLD = float(os.getenv("BALANCE_THRESHOLD", "30"))
 COOLDOWN_HOURS = float(os.getenv("NOTIFY_COOLDOWN_HOURS", "12"))
+UPSTREAM_BALANCE_ENABLED = os.getenv("UPSTREAM_BALANCE_ENABLED", "true").strip().lower() not in {"0", "false", "no"}
 DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
@@ -34,7 +35,13 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def http_json(path_or_url: str, method: str = "GET", body: Any = None, token: str | None = None) -> Any:
+def http_json(
+    path_or_url: str,
+    method: str = "GET",
+    body: Any = None,
+    token: str | None = None,
+    extra_headers: dict[str, str] | None = None,
+) -> Any:
     url = path_or_url if path_or_url.startswith("http") else f"{BASE_URL}{path_or_url}"
     payload = None
     headers = {"Accept": "application/json"}
@@ -43,6 +50,8 @@ def http_json(path_or_url: str, method: str = "GET", body: Any = None, token: st
         headers["Content-Type"] = "application/json"
     if token:
         headers["Authorization"] = f"Bearer {token}"
+    if extra_headers:
+        headers.update(extra_headers)
 
     transient_codes = {502, 503, 504}
     last_error: Exception | None = None
@@ -97,6 +106,98 @@ def to_number(value: Any) -> float | None:
         return None
 
 
+def unwrap_api_data(data: Any) -> Any:
+    if isinstance(data, dict) and "code" in data:
+        if data.get("code") in {0, "0"}:
+            return data.get("data")
+        raise RuntimeError(str(data.get("message") or data.get("error") or "上游接口返回错误"))
+    if isinstance(data, dict) and "data" in data and len(data) <= 3:
+        return data.get("data")
+    return data
+
+
+def find_number(data: Any, preferred_keys: tuple[str, ...]) -> float | None:
+    if isinstance(data, dict):
+        for key in preferred_keys:
+            if key in data:
+                number = to_number(data[key])
+                if number is not None:
+                    return number
+        for value in data.values():
+            number = find_number(value, preferred_keys)
+            if number is not None:
+                return number
+    elif isinstance(data, list):
+        for value in data:
+            number = find_number(value, preferred_keys)
+            if number is not None:
+                return number
+    return None
+
+
+def join_url(base_url: str, path: str) -> str:
+    return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
+
+def fetch_sub2api_balance(base_url: str, username: str, password: str) -> float:
+    login_data = unwrap_api_data(
+        http_json(
+            join_url(base_url, "/api/v1/auth/login"),
+            method="POST",
+            body={"email": username, "password": password},
+        )
+    )
+    if not isinstance(login_data, dict) or not login_data.get("access_token"):
+        raise RuntimeError("上游登录成功响应中没有 access_token")
+
+    profile_data = unwrap_api_data(
+        http_json(
+            join_url(base_url, "/api/v1/user/profile"),
+            token=str(login_data["access_token"]),
+            extra_headers={"X-User-UI-Request": "1"},
+        )
+    )
+    balance = find_number(profile_data, ("balance", "remaining_balance", "available_balance"))
+    if balance is None:
+        raise RuntimeError("上游用户信息中没有找到余额字段")
+    return balance
+
+
+def get_detail_credentials(detail: dict[str, Any], channel: dict[str, Any]) -> tuple[str | None, str | None]:
+    saved_username = detail.get("savedUserName")
+    saved_password = detail.get("savedPassword")
+    channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
+    username = saved_username or channel_data.get("accountName") or channel.get("accountName") or channel.get("credentialUserName")
+    password = saved_password or channel.get("savedPassword")
+    return (str(username).strip() if username else None, str(password).strip() if password else None)
+
+
+def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) -> dict[str, Any]:
+    if not UPSTREAM_BALANCE_ENABLED:
+        return channel
+
+    channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
+    base_url = channel_data.get("baseUrl") or channel.get("baseUrl")
+    platform = str(channel_data.get("platform") or channel.get("platform") or "").lower()
+    username, password = get_detail_credentials(detail, channel_data or channel)
+    if not base_url or not username or not password:
+        channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
+        return channel
+
+    try:
+        if "sub2" not in platform:
+            channel["upstreamBalanceError"] = "当前仅支持 Sub2API 上游实时余额"
+            return channel
+        upstream_balance = fetch_sub2api_balance(str(base_url), username, password)
+        channel["dashboardBalance"] = channel["balance"]
+        channel["balance"] = upstream_balance
+        channel["balanceSource"] = "upstream"
+        channel["isLow"] = upstream_balance < float(channel["threshold"])
+    except Exception as exc:
+        channel["upstreamBalanceError"] = str(exc)
+    return channel
+
+
 def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
     balance = to_number(item.get("balance"))
     threshold_override = to_number(item.get("lowBalanceThresholdOverride"))
@@ -109,6 +210,7 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
         "baseUrl": item.get("baseUrl"),
         "isStarred": bool(item.get("isStarred")),
         "balance": balance,
+        "balanceSource": "dashboard",
         "threshold": threshold,
         "tokenCount": item.get("tokenCount"),
         "lastSyncedAt": item.get("lastSyncedAt"),
@@ -170,7 +272,8 @@ def format_message(channels: list[dict[str, Any]], checked_at: str) -> str:
     for channel in channels:
         balance = "未知" if channel["balance"] is None else f"{channel['balance']:.4g}"
         star = "[星标] " if channel.get("isStarred") else ""
-        lines.append(f"- {star}{channel['name']}：余额 {balance}，阈值 {channel['threshold']:.4g}")
+        source = "上游实时" if channel.get("balanceSource") == "upstream" else "后台同步"
+        lines.append(f"- {star}{channel['name']}：余额 {balance}，阈值 {channel['threshold']:.4g}，来源 {source}")
     lines.append("")
     lines.append(f"后台：{BASE_URL}/dashboard")
     return "\n".join(lines)
@@ -192,6 +295,13 @@ def main() -> int:
         token = login()
         data = http_json("/api/channels/search", token=token)
         channels = [normalize_channel(item) for item in extract_channels(data)]
+        for channel in channels:
+            try:
+                detail = http_json(f"/api/channels/{channel['id']}", token=token)
+                if isinstance(detail, dict):
+                    refresh_upstream_balance(channel, detail)
+            except Exception as exc:
+                channel["upstreamBalanceError"] = str(exc)
         low_channels = sorted([channel for channel in channels if channel["isLow"]], key=channel_priority)
         state = read_json(STATE_PATH, {})
         notify_channels = sorted([channel for channel in low_channels if should_notify(channel, state, checked_at)], key=channel_priority)

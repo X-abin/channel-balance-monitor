@@ -218,6 +218,11 @@ td.mono {
   color: var(--danger);
 }
 
+.tag.neutral {
+  background: #f1f5f9;
+  color: #475569;
+}
+
 .muted {
   color: var(--muted);
 }
