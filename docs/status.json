@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-08-20T06:59:40+00:00",
+  "checkedAt": "2026-08-20T07:08:50+00:00",
   "baseUrl": "https://uptime.maolaoapi.com",
   "threshold": 30.0,
   "channels": [
@@ -11,12 +11,14 @@
       "baseUrl": "https://1024token.club",
       "isStarred": true,
       "balance": 130.95225608,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:53.359756+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:40.770265+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 403 https://1024token.club/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df91bcd896c1cf\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df91bcd896c1cf\",\"timestamp\":\"2026-08-20T07:08:52Z\",\"zone\":\"1024token.club\",\"cloudflare_error\":true,\"retryable\":false,"
     },
     {
       "id": 6,
@@ -25,12 +27,14 @@
       "baseUrl": "https://2coding.com",
       "isStarred": false,
       "balance": -0.020036,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
-      "lastSyncedAt": "2026-08-20T06:58:53.045117+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.596152+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 1,
@@ -38,13 +42,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ai98pro.xyz",
       "isStarred": true,
-      "balance": 302.96536867,
+      "balance": 246.52962697,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 2,
       "lastSyncedAt": "2026-08-20T04:11:22.061562+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "dashboardBalance": 302.96536867
     },
     {
       "id": 87,
@@ -53,12 +59,14 @@
       "baseUrl": "https://ageteam.online",
       "isStarred": false,
       "balance": 11.610060893,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:15.908995+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:45.671128+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 11.610060893
     },
     {
       "id": 40,
@@ -66,13 +74,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.ahooqq.cn",
       "isStarred": true,
-      "balance": 263.59874452,
+      "balance": 263.51874452,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-08-20T06:59:04.948401+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:38.773652+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 400 https://api.ahooqq.cn/api/v1/auth/login: {\"code\":400,\"message\":\"Invalid request: Key: 'LoginRequest.Email' Error:Field validation for 'Email' failed on the 'email' tag\"}"
     },
     {
       "id": 126,
@@ -81,12 +91,14 @@
       "baseUrl": "https://aihub.top",
       "isStarred": true,
       "balance": 144.05570065,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:52.881291+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.687908+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 403 https://aihub.top/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df91e28f959e01\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df91e28f959e01\",\"timestamp\":\"2026-08-20T07:08:58Z\",\"zone\":\"aihub.top\",\"cloudflare_error\":true,\"retryable\":false,\"owne"
     },
     {
       "id": 3,
@@ -95,12 +107,14 @@
       "baseUrl": "https://api.aixluv.com",
       "isStarred": false,
       "balance": -0.22094183,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
       "lastSyncedAt": "2026-06-30T02:11:44.581254+00:00",
       "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid email or password\",\"reason\":\"INVALID_CREDENTIALS\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 401 https://api.aixluv.com/api/v1/auth/login: {\"code\":401,\"message\":\"invalid email or password\",\"reason\":\"INVALID_CREDENTIALS\"}"
     },
     {
       "id": 39,
@@ -108,13 +122,15 @@
       "platform": "NewApi",
       "baseUrl": "https://apigate.amlkcloud.top",
       "isStarred": true,
-      "balance": 31.58,
+      "balance": 31.22,
+      "balanceSource": "dashboard",
       "threshold": 50.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:55.272646+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.779888+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 130,
@@ -122,13 +138,15 @@
       "platform": "NewApi",
       "baseUrl": "https://www.aiapisplus.com",
       "isStarred": true,
-      "balance": 282.269354,
+      "balance": 274.00253,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:14.517047+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:35.541461+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 127,
@@ -136,13 +154,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.bigsnake.xyz",
       "isStarred": true,
-      "balance": 159.17746523,
+      "balance": 159.1756803,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:53.880367+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.783449+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 159.17569301
     },
     {
       "id": 14,
@@ -151,12 +171,14 @@
       "baseUrl": "https://business.newcli.com",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
       "lastSyncedAt": "2026-08-07T00:43:58.272127+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 114,
@@ -164,13 +186,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://dklapi.com",
       "isStarred": false,
-      "balance": 129.96931294,
+      "balance": 129.96830444,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:56:04.558754+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.876163+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 129.96830444
     },
     {
       "id": 112,
@@ -178,13 +202,15 @@
       "platform": "NewApi",
       "baseUrl": "https://dragtokens.com",
       "isStarred": true,
-      "balance": 499.975022,
+      "balance": 499.973082,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:54.460859+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:42.704813+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 31,
@@ -192,13 +218,15 @@
       "platform": "NewApi",
       "baseUrl": "https://fafabbb.com",
       "isStarred": true,
-      "balance": 216.821838,
+      "balance": 216.70995,
+      "balanceSource": "dashboard",
       "threshold": 50.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:58.208665+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:49.722597+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 120,
@@ -206,13 +234,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://subdirect.aicodexvip.top",
       "isStarred": true,
-      "balance": 95.644693,
+      "balance": 95.504693,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:16.061756+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.731334+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 95.504693
     },
     {
       "id": 24,
@@ -221,12 +251,14 @@
       "baseUrl": "https://gzxsy.vip",
       "isStarred": false,
       "balance": -0.000548,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-08-20T06:58:56.816823+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:39.067281+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 13,
@@ -235,12 +267,14 @@
       "baseUrl": "https://justrouter.com",
       "isStarred": false,
       "balance": 1.66600954,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-05-29T08:16:31.642064+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 12,
@@ -248,13 +282,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://kocodex.link",
       "isStarred": true,
-      "balance": 68.08808177,
+      "balance": 68.08794647,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:52.028279+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:35.941688+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 68.08794647
     },
     {
       "id": 92,
@@ -263,12 +299,14 @@
       "baseUrl": "https://meinianda.top",
       "isStarred": true,
       "balance": 64.836,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:53.891265+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.462826+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 95,
@@ -276,13 +314,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://sail.mgrouter.com",
       "isStarred": true,
-      "balance": 449.1903392,
+      "balance": 441.1875616,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:16.330201+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.569722+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 403 https://sail.mgrouter.com/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df921b888fc9a3\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df921b888fc9a3\",\"timestamp\":\"2026-08-20T07:09:07Z\",\"zone\":\"sail.mgrouter.com\",\"cloudflare_error\":true,\"retryable\":fal"
     },
     {
       "id": 131,
@@ -291,12 +331,14 @@
       "baseUrl": "https://router.nerver.cc",
       "isStarred": false,
       "balance": 1.960688,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:17.199649+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.530926+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 11,
@@ -305,12 +347,14 @@
       "baseUrl": "https://ai.nexapi.cn",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 0,
-      "lastSyncedAt": "2026-08-20T06:59:15.316563+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:43.911505+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 0.0
     },
     {
       "id": 4,
@@ -319,12 +363,14 @@
       "baseUrl": "https://nexaxis.ai",
       "isStarred": false,
       "balance": -0.112594,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:53.439189+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.282609+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 25,
@@ -333,12 +379,14 @@
       "baseUrl": "https://nexus.1982video.cn",
       "isStarred": false,
       "balance": -0.04856359,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 3,
       "lastSyncedAt": "2026-07-07T15:11:07.957651+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 30,
@@ -346,13 +394,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.onebool.com",
       "isStarred": true,
-      "balance": 198.53447528,
+      "balance": 198.25846988,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-08-20T06:58:54.117056+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:41.3682+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 198.25846988
     },
     {
       "id": 47,
@@ -360,13 +410,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://tntapi.com",
       "isStarred": true,
-      "balance": 134.6033244,
+      "balance": 134.57630738,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:59:16.235025+00:00",
+      "lastSyncedAt": "2026-08-20T07:06:32.997775+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 403 https://tntapi.com/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df9232395fd639\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df9232395fd639\",\"timestamp\":\"2026-08-20T07:09:11Z\",\"zone\":\"tntapi.com\",\"cloudflare_error\":true,\"retryable\":false,\"own"
     },
     {
       "id": 125,
@@ -374,13 +426,15 @@
       "platform": "NewApi",
       "baseUrl": "https://tokunex.com",
       "isStarred": true,
-      "balance": 126.461714,
+      "balance": 120.09042,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:54.38629+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.838843+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 85,
@@ -388,13 +442,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://vokly.io",
       "isStarred": true,
-      "balance": 536.67742713,
+      "balance": 531.46283339,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:54.329859+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:56.883615+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 403 https://vokly.io/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df923829d83529\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df923829d83529\",\"timestamp\":\"2026-08-20T07:09:12Z\",\"zone\":\"vokly.io\",\"cloudflare_error\":true,\"retryable\":false,\"owner"
     },
     {
       "id": 28,
@@ -402,13 +458,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://wahaapi.top",
       "isStarred": true,
-      "balance": 130.55724176,
+      "balance": 129.55509334,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:52.683931+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.300021+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 129.58094606
     },
     {
       "id": 10,
@@ -417,12 +475,14 @@
       "baseUrl": "https://xixiapi.cc",
       "isStarred": true,
       "balance": 14.14390118,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 8,
       "lastSyncedAt": "2026-08-20T04:12:57.028966+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 403 https://xixiapi.cc/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df924209eb8b1a\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df924209eb8b1a\",\"timestamp\":\"2026-08-20T07:09:13Z\",\"zone\":\"xixiapi.cc\",\"cloudflare_error\":true,\"retryable\":false,\"own"
     },
     {
       "id": 8,
@@ -430,13 +490,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.aispline.com",
       "isStarred": true,
-      "balance": 194.332332677,
+      "balance": 1943.32332677,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:51.1672+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:35.118976+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 194.332332677
     },
     {
       "id": 5,
@@ -444,13 +506,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://us.zhima.world",
       "isStarred": true,
-      "balance": 72.94486318,
+      "balance": 569.64668348,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-08-20T06:58:55.484959+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:39.736783+00:00",
       "lastSyncError": null,
-      "isLow": true,
-      "needsLogin": false
+      "isLow": false,
+      "needsLogin": false,
+      "dashboardBalance": 569.94387108
     },
     {
       "id": 115,
@@ -459,12 +523,14 @@
       "baseUrl": "https://codexapis.com",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:52.625547+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.613291+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 26,
@@ -472,13 +538,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://sub2api.relaybases.com",
       "isStarred": true,
-      "balance": 276.27534288,
+      "balance": 276.27286403,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-08-20T06:58:52.098364+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:35.859384+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 276.27340538
     },
     {
       "id": 93,
@@ -486,13 +554,15 @@
       "platform": "NewApi",
       "baseUrl": "https://dltokenapi.com",
       "isStarred": true,
-      "balance": 76.149988,
+      "balance": 76.149383,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:53.14947+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.973153+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 23,
@@ -500,13 +570,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.aiapipay.com",
       "isStarred": true,
-      "balance": 111.6567907007,
+      "balance": 110.2567253807,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:16.201251+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.818521+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 404 https://api.aiapipay.com/api/v1/auth/login: {\"error\":{\"type\":\"not_found_error\",\"message\":\"Not Found\"}}"
     },
     {
       "id": 100,
@@ -515,12 +587,14 @@
       "baseUrl": "https://www.umapis.com",
       "isStarred": false,
       "balance": 1.981648,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:59:16.498604+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.299921+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 91,
@@ -529,12 +603,14 @@
       "baseUrl": "https://origingateway.com",
       "isStarred": false,
       "balance": null,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
       "lastSyncedAt": "2026-07-23T07:00:52.96592+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 18,
@@ -543,12 +619,14 @@
       "baseUrl": "https://api.maolaoapi.cc",
       "isStarred": false,
       "balance": 8977521.536022,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 25,
       "lastSyncedAt": "2026-08-05T10:02:51.135254+00:00",
-      "lastSyncError": "NewAPI 获取令牌列表失败，请检查个人中心令牌权限和上游地址。NewAPI 请求失败：GET https://api.maolaoapi.cc/api/token/search?page=1&page_size=100 -> 429 Too Many Requests: ",
+      "lastSyncError": "NewAPI 获取令牌列表失败，请检查个人中心令牌权限和上游地址。NewAPI 请求失败：GET https://api.maolaoapi.cc/api/token/search?page=1&page_size=100: Unauthorized, invalid access token",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 101,
@@ -557,12 +635,14 @@
       "baseUrl": "https://www.huyunapi.com",
       "isStarred": false,
       "balance": -0.074146,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:16.685949+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:45.737819+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 96,
@@ -570,13 +650,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ai98pro.xyz",
       "isStarred": false,
-      "balance": 0.65271823,
+      "balance": 0.64540768,
+      "balanceSource": "upstream",
       "threshold": 5.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:51.919845+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.006134+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 0.64651973
     },
     {
       "id": 94,
@@ -584,13 +666,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.onebool.com",
       "isStarred": false,
-      "balance": 7.4464053,
+      "balance": 7.4438703,
+      "balanceSource": "upstream",
       "threshold": 5.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:15.706317+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.294485+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 7.4446413
     },
     {
       "id": 102,
@@ -599,12 +683,14 @@
       "baseUrl": "https://api.ahooqq.cn",
       "isStarred": false,
       "balance": 0.05,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-07-31T22:22:54.935865+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "dashboardBalance": 0.05
     },
     {
       "id": 29,
@@ -613,12 +699,14 @@
       "baseUrl": "https://business.xproxy.ai",
       "isStarred": true,
       "balance": 320.943634,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:55.592012+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:38.933405+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 37,
@@ -626,13 +714,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://plus.9988712.xyz",
       "isStarred": true,
-      "balance": 365.46370997,
+      "balance": 307.95058105,
+      "balanceSource": "upstream",
       "threshold": 20.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-08-19T14:22:50.768559+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "dashboardBalance": 365.46370997
     },
     {
       "id": 86,
@@ -641,12 +731,14 @@
       "baseUrl": "https://molifangapi.com",
       "isStarred": false,
       "balance": 37.67402535,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:53.88234+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.801259+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 37.67402535
     }
   ],
   "lowChannels": [
@@ -657,12 +749,14 @@
       "baseUrl": "https://xixiapi.cc",
       "isStarred": true,
       "balance": 14.14390118,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 8,
       "lastSyncedAt": "2026-08-20T04:12:57.028966+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 403 https://xixiapi.cc/api/v1/auth/login: {\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/\",\"title\":\"Error 1010: Access denied\",\"status\":403,\"detail\":\"The site owner has blocked access based on your browser's signature.\",\"instance\":\"a2df924209eb8b1a\",\"error_code\":1010,\"error_name\":\"browser_signature_banned\",\"error_category\":\"access_denied\",\"ray_id\":\"a2df924209eb8b1a\",\"timestamp\":\"2026-08-20T07:09:13Z\",\"zone\":\"xixiapi.cc\",\"cloudflare_error\":true,\"retryable\":false,\"own"
     },
     {
       "id": 39,
@@ -670,13 +764,15 @@
       "platform": "NewApi",
       "baseUrl": "https://apigate.amlkcloud.top",
       "isStarred": true,
-      "balance": 31.58,
+      "balance": 31.22,
+      "balanceSource": "dashboard",
       "threshold": 50.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:55.272646+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.779888+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 12,
@@ -684,27 +780,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://kocodex.link",
       "isStarred": true,
-      "balance": 68.08808177,
+      "balance": 68.08794647,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:58:52.028279+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:35.941688+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
-    },
-    {
-      "id": 5,
-      "name": "zhima",
-      "platform": "Sub2Api",
-      "baseUrl": "https://us.zhima.world",
-      "isStarred": true,
-      "balance": 72.94486318,
-      "threshold": 100.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-08-20T06:58:55.484959+00:00",
-      "lastSyncError": null,
-      "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 68.08794647
     },
     {
       "id": 3,
@@ -713,12 +797,14 @@
       "baseUrl": "https://api.aixluv.com",
       "isStarred": false,
       "balance": -0.22094183,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
       "lastSyncedAt": "2026-06-30T02:11:44.581254+00:00",
       "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid email or password\",\"reason\":\"INVALID_CREDENTIALS\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 401 https://api.aixluv.com/api/v1/auth/login: {\"code\":401,\"message\":\"invalid email or password\",\"reason\":\"INVALID_CREDENTIALS\"}"
     },
     {
       "id": 4,
@@ -727,12 +813,14 @@
       "baseUrl": "https://nexaxis.ai",
       "isStarred": false,
       "balance": -0.112594,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:53.439189+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.282609+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 101,
@@ -741,12 +829,14 @@
       "baseUrl": "https://www.huyunapi.com",
       "isStarred": false,
       "balance": -0.074146,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:16.685949+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:45.737819+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 25,
@@ -755,12 +845,14 @@
       "baseUrl": "https://nexus.1982video.cn",
       "isStarred": false,
       "balance": -0.04856359,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 3,
       "lastSyncedAt": "2026-07-07T15:11:07.957651+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 6,
@@ -769,12 +861,14 @@
       "baseUrl": "https://2coding.com",
       "isStarred": false,
       "balance": -0.020036,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
-      "lastSyncedAt": "2026-08-20T06:58:53.045117+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:44.596152+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 24,
@@ -783,12 +877,14 @@
       "baseUrl": "https://gzxsy.vip",
       "isStarred": false,
       "balance": -0.000548,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-08-20T06:58:56.816823+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:39.067281+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 14,
@@ -797,12 +893,14 @@
       "baseUrl": "https://business.newcli.com",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 0,
       "lastSyncedAt": "2026-08-07T00:43:58.272127+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 11,
@@ -811,12 +909,14 @@
       "baseUrl": "https://ai.nexapi.cn",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "upstream",
       "threshold": 100.0,
       "tokenCount": 0,
-      "lastSyncedAt": "2026-08-20T06:59:15.316563+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:43.911505+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 0.0
     },
     {
       "id": 115,
@@ -825,12 +925,14 @@
       "baseUrl": "https://codexapis.com",
       "isStarred": false,
       "balance": 0.0,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:52.625547+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.613291+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 102,
@@ -839,12 +941,14 @@
       "baseUrl": "https://api.ahooqq.cn",
       "isStarred": false,
       "balance": 0.05,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-07-31T22:22:54.935865+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "dashboardBalance": 0.05
     },
     {
       "id": 96,
@@ -852,13 +956,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ai98pro.xyz",
       "isStarred": false,
-      "balance": 0.65271823,
+      "balance": 0.64540768,
+      "balanceSource": "upstream",
       "threshold": 5.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:58:51.919845+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:36.006134+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 0.64651973
     },
     {
       "id": 13,
@@ -867,12 +973,14 @@
       "baseUrl": "https://justrouter.com",
       "isStarred": false,
       "balance": 1.66600954,
+      "balanceSource": "dashboard",
       "threshold": 100.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-05-29T08:16:31.642064+00:00",
       "lastSyncError": "Sub2API Refresh Token 刷新失败，请检查 rftoken 和上游地址。/api/v1/auth/refresh 返回 401 Unauthorized: {\"code\":401,\"message\":\"invalid refresh token\",\"reason\":\"REFRESH_TOKEN_INVALID\"}",
       "isLow": true,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "缺少上游地址、账号或密码"
     },
     {
       "id": 131,
@@ -881,12 +989,14 @@
       "baseUrl": "https://router.nerver.cc",
       "isStarred": false,
       "balance": 1.960688,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:17.199649+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.530926+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 100,
@@ -895,12 +1005,14 @@
       "baseUrl": "https://www.umapis.com",
       "isStarred": false,
       "balance": 1.981648,
+      "balanceSource": "dashboard",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-08-20T06:59:16.498604+00:00",
+      "lastSyncedAt": "2026-08-20T07:07:37.299921+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "当前仅支持 Sub2API 上游实时余额"
     },
     {
       "id": 87,
@@ -909,12 +1021,14 @@
       "baseUrl": "https://ageteam.online",
       "isStarred": false,
       "balance": 11.610060893,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-08-20T06:59:15.908995+00:00",
+      "lastSyncedAt": "2026-08-20T07:08:45.671128+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "dashboardBalance": 11.610060893
     }
   ],
   "error": null,
