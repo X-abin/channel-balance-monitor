@@ -3,6 +3,7 @@ import os
 import sys
 import time
 from datetime import datetime, timezone
+from http.cookiejar import CookieJar
 from pathlib import Path
 from typing import Any
 from urllib import error, parse, request
@@ -17,6 +18,12 @@ MONITOR_STARRED_ONLY = os.getenv("MONITOR_STARRED_ONLY", "true").strip().lower()
 DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
+DEFAULT_NEWAPI_QUOTA_PER_UNIT = float(os.getenv("NEWAPI_DEFAULT_QUOTA_PER_UNIT", "500000"))
+DEFAULT_HEADERS = {
+    "Accept": "application/json",
+    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0 Safari/537.36",
+}
 
 
 def now_iso() -> str:
@@ -43,10 +50,11 @@ def http_json(
     body: Any = None,
     token: str | None = None,
     extra_headers: dict[str, str] | None = None,
+    opener: Any = None,
 ) -> Any:
     url = path_or_url if path_or_url.startswith("http") else f"{BASE_URL}{path_or_url}"
     payload = None
-    headers = {"Accept": "application/json"}
+    headers = dict(DEFAULT_HEADERS)
     if body is not None:
         payload = json.dumps(body).encode("utf-8")
         headers["Content-Type"] = "application/json"
@@ -60,7 +68,8 @@ def http_json(
     for attempt in range(1, 4):
         req = request.Request(url, data=payload, method=method, headers=headers)
         try:
-            with request.urlopen(req, timeout=30) as resp:
+            open_request = opener.open if opener else request.urlopen
+            with open_request(req, timeout=30) as resp:
                 raw = resp.read().decode("utf-8")
                 return json.loads(raw) if raw else None
         except error.HTTPError as exc:
@@ -109,6 +118,10 @@ def to_number(value: Any) -> float | None:
 
 
 def unwrap_api_data(data: Any) -> Any:
+    if isinstance(data, dict) and "success" in data:
+        if data.get("success") is True:
+            return data.get("data")
+        raise RuntimeError(str(data.get("message") or data.get("error") or "上游接口返回错误"))
     if isinstance(data, dict) and "code" in data:
         if data.get("code") in {0, "0"}:
             return data.get("data")
@@ -165,6 +178,91 @@ def fetch_sub2api_balance(base_url: str, username: str, password: str) -> float:
     return balance
 
 
+def find_text(data: Any, preferred_keys: tuple[str, ...]) -> str | None:
+    if isinstance(data, dict):
+        for key in preferred_keys:
+            value = data.get(key)
+            if isinstance(value, str) and value.strip():
+                return value.strip()
+        for value in data.values():
+            text = find_text(value, preferred_keys)
+            if text:
+                return text
+    elif isinstance(data, list):
+        for value in data:
+            text = find_text(value, preferred_keys)
+            if text:
+                return text
+    return None
+
+
+def newapi_quota_to_balance(quota: float, status_data: Any) -> float:
+    status = status_data if isinstance(status_data, dict) else {}
+    quota_per_unit = find_number(status, ("quota_per_unit",)) or DEFAULT_NEWAPI_QUOTA_PER_UNIT
+    if quota_per_unit <= 0:
+        quota_per_unit = DEFAULT_NEWAPI_QUOTA_PER_UNIT
+
+    balance = quota / quota_per_unit
+    display_type = str(status.get("quota_display_type") or "USD").upper()
+    if display_type == "CNY":
+        balance *= find_number(status, ("usd_exchange_rate",)) or 1
+    elif display_type == "CUSTOM":
+        balance *= find_number(status, ("custom_currency_exchange_rate",)) or 1
+    return balance
+
+
+def extract_newapi_balance(self_data: Any, status_data: Any) -> float:
+    direct_balance = find_number(
+        self_data,
+        (
+            "balance",
+            "remaining_balance",
+            "available_balance",
+            "money",
+            "amount",
+            "credit",
+            "credits",
+        ),
+    )
+    if direct_balance is not None:
+        return direct_balance
+
+    quota = find_number(self_data, ("quota", "remain_quota", "remaining_quota"))
+    if quota is None:
+        raise RuntimeError("上游用户信息中没有找到余额或 quota 字段")
+    return newapi_quota_to_balance(quota, status_data)
+
+
+def fetch_newapi_balance(base_url: str, username: str, password: str) -> float:
+    cookie_jar = CookieJar()
+    opener = request.build_opener(request.HTTPCookieProcessor(cookie_jar))
+
+    status_data: Any = {}
+    try:
+        status_data = unwrap_api_data(http_json(join_url(base_url, "/api/status"), opener=opener))
+    except Exception:
+        status_data = {}
+
+    login_data = unwrap_api_data(
+        http_json(
+            join_url(base_url, "/api/user/login"),
+            method="POST",
+            body={"username": username, "password": password},
+            opener=opener,
+        )
+    )
+    auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
+
+    self_data = unwrap_api_data(
+        http_json(
+            join_url(base_url, "/api/user/self"),
+            token=auth_token,
+            opener=opener,
+        )
+    )
+    return extract_newapi_balance(self_data, status_data)
+
+
 def get_detail_credentials(detail: dict[str, Any], channel: dict[str, Any]) -> tuple[str | None, str | None]:
     saved_username = detail.get("savedUserName")
     saved_password = detail.get("savedPassword")
@@ -191,11 +289,14 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
         return channel
 
     try:
-        if "sub2" not in platform:
+        if "sub2" in platform:
+            upstream_balance = fetch_sub2api_balance(str(base_url), username, password)
+        elif "newapi" in platform or "new_api" in platform or "new api" in platform:
+            upstream_balance = fetch_newapi_balance(str(base_url), username, password)
+        else:
             channel["balanceSource"] = "upstream_failed"
-            channel["upstreamBalanceError"] = "当前仅支持 Sub2API 上游实时余额"
+            channel["upstreamBalanceError"] = "暂未支持该平台类型的上游实时余额"
             return channel
-        upstream_balance = fetch_sub2api_balance(str(base_url), username, password)
         channel["balance"] = upstream_balance
         channel["balanceSource"] = "upstream"
         channel["isLow"] = upstream_balance < float(channel["threshold"])
@@ -211,7 +312,7 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
     threshold_override = to_number(item.get("lowBalanceThresholdOverride"))
     threshold = threshold_override if threshold_override is not None else THRESHOLD
     channel_id = item.get("id") or item.get("channelId") or item.get("name")
-    return {
+    channel = {
         "id": channel_id,
         "name": str(item.get("name") or item.get("channelName") or channel_id),
         "platform": item.get("platform"),
