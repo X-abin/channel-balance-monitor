@@ -1,0 +1,9 @@
+{
+  "ok": false,
+  "checkedAt": "2026-08-20T05:07:51+00:00",
+  "baseUrl": "https://uptime.maolaoapi.com",
+  "threshold": 30.0,
+  "channels": [],
+  "lowChannels": [],
+  "error": "缺少 UPTIME_USERNAME / UPTIME_PASSWORD，或 UPTIME_TOKEN。"
+}

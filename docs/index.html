@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>渠道余额监测</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Channel Balance Monitor</p>
+          <h1>渠道余额监测</h1>
+          <p class="summary" id="summary">正在读取最近一次检查结果...</p>
+        </div>
+        <div class="status-pill" id="status-pill">读取中</div>
+      </section>
+
+      <section class="metrics" aria-label="概览">
+        <div class="metric">
+          <span>渠道总数</span>
+          <strong id="total-count">-</strong>
+        </div>
+        <div class="metric">
+          <span>低余额</span>
+          <strong id="low-count">-</strong>
+        </div>
+        <div class="metric">
+          <span>提醒阈值</span>
+          <strong id="threshold">-</strong>
+        </div>
+        <div class="metric">
+          <span>最近检查</span>
+          <strong id="checked-at">-</strong>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>低余额渠道</h2>
+          <span id="alert-note">余额低于阈值时会显示在这里</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>渠道</th>
+                <th>余额</th>
+                <th>阈值</th>
+                <th>上次同步</th>
+              </tr>
+            </thead>
+            <tbody id="low-table">
+              <tr><td colspan="4">正在读取...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>全部渠道</h2>
+          <span>按余额从低到高排列</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>渠道</th>
+                <th>余额</th>
+                <th>令牌数</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody id="all-table">
+              <tr><td colspan="4">正在读取...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
