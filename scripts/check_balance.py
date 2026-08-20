@@ -12,6 +12,7 @@ BASE_URL = os.getenv("UPTIME_BASE_URL", "https://uptime.maolaoapi.com").rstrip("
 THRESHOLD = float(os.getenv("BALANCE_THRESHOLD", "30"))
 COOLDOWN_HOURS = float(os.getenv("NOTIFY_COOLDOWN_HOURS", "12"))
 UPSTREAM_BALANCE_ENABLED = os.getenv("UPSTREAM_BALANCE_ENABLED", "true").strip().lower() not in {"0", "false", "no"}
+UPSTREAM_BALANCE_ONLY = os.getenv("UPSTREAM_BALANCE_ONLY", "true").strip().lower() not in {"0", "false", "no"}
 MONITOR_STARRED_ONLY = os.getenv("MONITOR_STARRED_ONLY", "true").strip().lower() not in {"0", "false", "no"}
 DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
@@ -175,6 +176,9 @@ def get_detail_credentials(detail: dict[str, Any], channel: dict[str, Any]) -> t
 
 def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) -> dict[str, Any]:
     if not UPSTREAM_BALANCE_ENABLED:
+        if UPSTREAM_BALANCE_ONLY:
+            channel["balanceSource"] = "upstream_failed"
+            channel["upstreamBalanceError"] = "上游实时余额读取已关闭"
         return channel
 
     channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
@@ -182,25 +186,28 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
     platform = str(channel_data.get("platform") or channel.get("platform") or "").lower()
     username, password = get_detail_credentials(detail, channel_data or channel)
     if not base_url or not username or not password:
+        channel["balanceSource"] = "upstream_failed"
         channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
         return channel
 
     try:
         if "sub2" not in platform:
+            channel["balanceSource"] = "upstream_failed"
             channel["upstreamBalanceError"] = "当前仅支持 Sub2API 上游实时余额"
             return channel
         upstream_balance = fetch_sub2api_balance(str(base_url), username, password)
-        channel["dashboardBalance"] = channel["balance"]
         channel["balance"] = upstream_balance
         channel["balanceSource"] = "upstream"
         channel["isLow"] = upstream_balance < float(channel["threshold"])
     except Exception as exc:
+        channel["balanceSource"] = "upstream_failed"
         channel["upstreamBalanceError"] = str(exc)
     return channel
 
 
 def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
-    balance = to_number(item.get("balance"))
+    dashboard_balance = to_number(item.get("balance"))
+    balance = None if UPSTREAM_BALANCE_ONLY else dashboard_balance
     threshold_override = to_number(item.get("lowBalanceThresholdOverride"))
     threshold = threshold_override if threshold_override is not None else THRESHOLD
     channel_id = item.get("id") or item.get("channelId") or item.get("name")
@@ -211,7 +218,8 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
         "baseUrl": item.get("baseUrl"),
         "isStarred": bool(item.get("isStarred")),
         "balance": balance,
-        "balanceSource": "dashboard",
+        "dashboardBalance": dashboard_balance,
+        "balanceSource": "upstream_pending" if UPSTREAM_BALANCE_ONLY else "dashboard",
         "threshold": threshold,
         "tokenCount": item.get("tokenCount"),
         "lastSyncedAt": item.get("lastSyncedAt"),
@@ -290,6 +298,7 @@ def main() -> int:
         "channels": [],
         "lowChannels": [],
         "skippedChannels": 0,
+        "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
         "error": None,
     }
 
@@ -306,6 +315,7 @@ def main() -> int:
             except Exception as exc:
                 channel["upstreamBalanceError"] = str(exc)
         low_channels = sorted([channel for channel in channels if channel["isLow"]], key=channel_priority)
+        failed_channels = sorted([channel for channel in channels if channel.get("balanceSource") == "upstream_failed"], key=channel_priority)
         state = read_json(STATE_PATH, {})
         notify_channels = sorted([channel for channel in low_channels if should_notify(channel, state, checked_at)], key=channel_priority)
 
@@ -317,13 +327,15 @@ def main() -> int:
             "channels": channels,
             "lowChannels": low_channels,
             "notifiedChannels": notify_channels,
+            "failedChannels": failed_channels,
             "monitorStarredOnly": MONITOR_STARRED_ONLY,
+            "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
             "totalChannels": len(all_channels),
             "skippedChannels": len(all_channels) - len(channels),
         })
         write_json(STATE_PATH, state)
         write_json(STATUS_PATH, status)
-        print(f"检查完成：监测 {len(channels)} 个渠道，跳过 {len(all_channels) - len(channels)} 个未星标渠道，{len(low_channels)} 个低余额。")
+        print(f"检查完成：监测 {len(channels)} 个渠道，跳过 {len(all_channels) - len(channels)} 个未星标渠道，{len(low_channels)} 个低余额，{len(failed_channels)} 个实时读取失败。")
         return 0
     except Exception as exc:
         status["error"] = str(exc)
