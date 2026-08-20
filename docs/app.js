@@ -34,14 +34,18 @@ function escapeHtml(value) {
 }
 
 function channelName(channel) {
-  const star = channel.isStarred ? '<span class="star-badge" title="后台已星标">星标</span>' : "";
-  return `<span class="channel-name">${escapeHtml(channel.name)}${star}</span>`;
+  return `<span class="channel-name">${escapeHtml(channel.name)}</span>`;
+}
+
+function starCell(channel) {
+  return channel.isStarred ? '<span class="star-badge" title="后台已星标">星标</span>' : '<span class="muted">-</span>';
 }
 
 function rowForLow(channel) {
   return `
     <tr>
       <td>${channelName(channel)}</td>
+      <td>${starCell(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
       <td class="mono">${formatMoney(channel.threshold)}</td>
       <td class="muted">${formatTime(channel.lastSyncedAt)}</td>
@@ -55,6 +59,7 @@ function rowForAll(channel) {
   return `
     <tr>
       <td>${channelName(channel)}</td>
+      <td>${starCell(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
       <td class="mono">${channel.tokenCount ?? "-"}</td>
       <td><span class="tag ${tagClass}">${tagText}</span></td>
@@ -73,6 +78,7 @@ function sortChannels(channels) {
 function render(data) {
   const channels = Array.isArray(data.channels) ? data.channels : [];
   const lowChannels = Array.isArray(data.lowChannels) ? data.lowChannels : [];
+  const starredLowCount = lowChannels.filter((channel) => channel.isStarred).length;
 
   els.total.textContent = channels.length;
   els.low.textContent = lowChannels.length;
@@ -87,7 +93,7 @@ function render(data) {
   } else if (lowChannels.length > 0) {
     els.pill.classList.add("warn");
     els.pill.textContent = "需要续费";
-    els.summary.textContent = `发现 ${lowChannels.length} 个渠道余额低于阈值，已按配置发送 Telegram 提醒。`;
+    els.summary.textContent = `发现 ${lowChannels.length} 个渠道余额低于阈值，其中 ${starredLowCount} 个是星标渠道，已按配置发送 Telegram 提醒。`;
   } else {
     els.pill.classList.add("ok");
     els.pill.textContent = "正常";
@@ -95,8 +101,8 @@ function render(data) {
   }
 
   els.alertNote.textContent = lowChannels.length > 0 ? "这些渠道需要优先处理" : "当前没有低余额渠道";
-  els.lowTable.innerHTML = lowChannels.length ? lowChannels.map(rowForLow).join("") : '<tr><td colspan="4">当前没有低余额渠道。</td></tr>';
-  els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="4">暂无渠道数据。</td></tr>';
+  els.lowTable.innerHTML = lowChannels.length ? lowChannels.map(rowForLow).join("") : '<tr><td colspan="5">当前没有低余额渠道。</td></tr>';
+  els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="5">暂无渠道数据。</td></tr>';
 }
 
 fetch("status.json", { cache: "no-store" })
@@ -113,6 +119,6 @@ fetch("status.json", { cache: "no-store" })
     els.low.textContent = "-";
     els.threshold.textContent = "30 元";
     els.checkedAt.textContent = "-";
-    els.lowTable.innerHTML = '<tr><td colspan="4">等待第一次检查结果。</td></tr>';
-    els.allTable.innerHTML = '<tr><td colspan="4">等待第一次检查结果。</td></tr>';
+    els.lowTable.innerHTML = '<tr><td colspan="5">等待第一次检查结果。</td></tr>';
+    els.allTable.innerHTML = '<tr><td colspan="5">等待第一次检查结果。</td></tr>';
   });
