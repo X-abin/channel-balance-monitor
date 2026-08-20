@@ -86,5 +86,9 @@
   "28": {
     "isLow": true,
     "lastNotifiedAt": "2026-08-20T12:58:56+00:00"
+  },
+  "130": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-08-20T13:54:27+00:00"
   }
 }
