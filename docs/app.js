@@ -33,10 +33,15 @@ function escapeHtml(value) {
   }[char]));
 }
 
+function channelName(channel) {
+  const star = channel.isStarred ? '<span class="star-badge" title="后台已星标">星标</span>' : "";
+  return `<span class="channel-name">${escapeHtml(channel.name)}${star}</span>`;
+}
+
 function rowForLow(channel) {
   return `
     <tr>
-      <td>${escapeHtml(channel.name)}</td>
+      <td>${channelName(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
       <td class="mono">${formatMoney(channel.threshold)}</td>
       <td class="muted">${formatTime(channel.lastSyncedAt)}</td>
@@ -49,7 +54,7 @@ function rowForAll(channel) {
   const tagText = channel.isLow ? "低余额" : "正常";
   return `
     <tr>
-      <td>${escapeHtml(channel.name)}</td>
+      <td>${channelName(channel)}</td>
       <td class="mono">${formatMoney(channel.balance)}</td>
       <td class="mono">${channel.tokenCount ?? "-"}</td>
       <td><span class="tag ${tagClass}">${tagText}</span></td>

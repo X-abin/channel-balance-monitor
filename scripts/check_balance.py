@@ -107,6 +107,7 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
         "name": str(item.get("name") or item.get("channelName") or channel_id),
         "platform": item.get("platform"),
         "baseUrl": item.get("baseUrl"),
+        "isStarred": bool(item.get("isStarred")),
         "balance": balance,
         "threshold": threshold,
         "tokenCount": item.get("tokenCount"),
@@ -162,7 +163,8 @@ def format_message(channels: list[dict[str, Any]], checked_at: str) -> str:
     lines = ["渠道余额提醒", f"检查时间：{checked_at}", ""]
     for channel in channels:
         balance = "未知" if channel["balance"] is None else f"{channel['balance']:.4g}"
-        lines.append(f"- {channel['name']}：余额 {balance}，阈值 {channel['threshold']:.4g}")
+        star = "[星标] " if channel.get("isStarred") else ""
+        lines.append(f"- {star}{channel['name']}：余额 {balance}，阈值 {channel['threshold']:.4g}")
     lines.append("")
     lines.append(f"后台：{BASE_URL}/dashboard")
     return "\n".join(lines)
