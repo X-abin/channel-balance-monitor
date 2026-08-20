@@ -12,6 +12,7 @@ BASE_URL = os.getenv("UPTIME_BASE_URL", "https://uptime.maolaoapi.com").rstrip("
 THRESHOLD = float(os.getenv("BALANCE_THRESHOLD", "30"))
 COOLDOWN_HOURS = float(os.getenv("NOTIFY_COOLDOWN_HOURS", "12"))
 UPSTREAM_BALANCE_ENABLED = os.getenv("UPSTREAM_BALANCE_ENABLED", "true").strip().lower() not in {"0", "false", "no"}
+MONITOR_STARRED_ONLY = os.getenv("MONITOR_STARRED_ONLY", "true").strip().lower() not in {"0", "false", "no"}
 DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
@@ -288,13 +289,15 @@ def main() -> int:
         "threshold": THRESHOLD,
         "channels": [],
         "lowChannels": [],
+        "skippedChannels": 0,
         "error": None,
     }
 
     try:
         token = login()
         data = http_json("/api/channels/search", token=token)
-        channels = [normalize_channel(item) for item in extract_channels(data)]
+        all_channels = [normalize_channel(item) for item in extract_channels(data)]
+        channels = [channel for channel in all_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else all_channels
         for channel in channels:
             try:
                 detail = http_json(f"/api/channels/{channel['id']}", token=token)
@@ -309,10 +312,18 @@ def main() -> int:
         if notify_channels:
             send_telegram(format_message(notify_channels, checked_at))
 
-        status.update({"ok": True, "channels": channels, "lowChannels": low_channels, "notifiedChannels": notify_channels})
+        status.update({
+            "ok": True,
+            "channels": channels,
+            "lowChannels": low_channels,
+            "notifiedChannels": notify_channels,
+            "monitorStarredOnly": MONITOR_STARRED_ONLY,
+            "totalChannels": len(all_channels),
+            "skippedChannels": len(all_channels) - len(channels),
+        })
         write_json(STATE_PATH, state)
         write_json(STATUS_PATH, status)
-        print(f"检查完成：{len(channels)} 个渠道，{len(low_channels)} 个低余额。")
+        print(f"检查完成：监测 {len(channels)} 个渠道，跳过 {len(all_channels) - len(channels)} 个未星标渠道，{len(low_channels)} 个低余额。")
         return 0
     except Exception as exc:
         status["error"] = str(exc)

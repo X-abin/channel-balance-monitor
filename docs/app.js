@@ -91,6 +91,8 @@ function render(data) {
   const channels = Array.isArray(data.channels) ? data.channels : [];
   const lowChannels = Array.isArray(data.lowChannels) ? data.lowChannels : [];
   const starredLowCount = lowChannels.filter((channel) => channel.isStarred).length;
+  const skippedChannels = Number(data.skippedChannels || 0);
+  const skipText = data.monitorStarredOnly && skippedChannels > 0 ? `，已跳过 ${skippedChannels} 个未星标渠道` : "";
 
   els.total.textContent = channels.length;
   els.low.textContent = lowChannels.length;
@@ -105,14 +107,14 @@ function render(data) {
   } else if (lowChannels.length > 0) {
     els.pill.classList.add("warn");
     els.pill.textContent = "需要续费";
-    els.summary.textContent = `发现 ${lowChannels.length} 个渠道余额低于阈值，其中 ${starredLowCount} 个是星标渠道，已按配置发送 Telegram 提醒。`;
+    els.summary.textContent = `发现 ${lowChannels.length} 个星标渠道余额低于阈值${skipText}，已按配置发送 Telegram 提醒。`;
   } else {
     els.pill.classList.add("ok");
     els.pill.textContent = "正常";
-    els.summary.textContent = "所有可读取余额的渠道都高于提醒阈值。";
+    els.summary.textContent = `当前监测的星标渠道都高于提醒阈值${skipText}。`;
   }
 
-  els.alertNote.textContent = lowChannels.length > 0 ? "星标渠道会优先显示和提醒" : "当前没有低余额渠道";
+  els.alertNote.textContent = lowChannels.length > 0 ? "当前只监测后台已星标渠道" : "当前没有低余额星标渠道";
   els.lowTable.innerHTML = lowChannels.length ? sortChannels(lowChannels).map(rowForLow).join("") : '<tr><td colspan="6">当前没有低余额渠道。</td></tr>';
   els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="6">暂无渠道数据。</td></tr>';
 }

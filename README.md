@@ -3,6 +3,7 @@
 这是一个适合新手使用的渠道余额监测工具：
 
 - 每 30 分钟检查一次 `https://uptime.maolaoapi.com/dashboard` 的渠道余额
+- 默认只监测后台里已星标的渠道
 - 当渠道余额低于 `30 元` 时，发送 Telegram 提醒
 - GitHub Pages 展示最近一次检查结果
 
@@ -49,6 +50,20 @@
 
 ```yaml
 BALANCE_THRESHOLD: "30"
+```
+
+## 是否只监测星标渠道
+
+默认只监测后台里已星标的渠道：
+
+```yaml
+MONITOR_STARRED_ONLY: "true"
+```
+
+如果以后想恢复监测全部渠道，把它改成：
+
+```yaml
+MONITOR_STARRED_ONLY: "false"
 ```
 
 ## 避免重复提醒

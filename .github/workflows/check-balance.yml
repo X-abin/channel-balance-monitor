@@ -32,6 +32,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           BALANCE_THRESHOLD: "30"
           NOTIFY_COOLDOWN_HOURS: "12"
+          MONITOR_STARRED_ONLY: "true"
         run: python scripts/check_balance.py
 
       - name: Publish status to GitHub Pages
