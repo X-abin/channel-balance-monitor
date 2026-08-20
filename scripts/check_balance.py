@@ -218,7 +218,6 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
         "baseUrl": item.get("baseUrl"),
         "isStarred": bool(item.get("isStarred")),
         "balance": balance,
-        "dashboardBalance": dashboard_balance,
         "balanceSource": "upstream_pending" if UPSTREAM_BALANCE_ONLY else "dashboard",
         "threshold": threshold,
         "tokenCount": item.get("tokenCount"),
@@ -227,6 +226,9 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
         "isLow": balance is not None and balance < threshold,
         "needsLogin": bool(item.get("lastSyncError")),
     }
+    if not UPSTREAM_BALANCE_ONLY:
+        channel["dashboardBalance"] = dashboard_balance
+    return channel
 
 
 def channel_priority(channel: dict[str, Any]) -> tuple[int, float, str]:
