@@ -196,6 +196,16 @@ def find_text(data: Any, preferred_keys: tuple[str, ...]) -> str | None:
     return None
 
 
+def find_identifier(data: Any, preferred_keys: tuple[str, ...]) -> str | None:
+    text = find_text(data, preferred_keys)
+    if text:
+        return text
+    number = find_number(data, preferred_keys)
+    if number is None:
+        return None
+    return str(int(number)) if number.is_integer() else str(number)
+
+
 def newapi_quota_to_balance(quota: float, status_data: Any) -> float:
     status = status_data if isinstance(status_data, dict) else {}
     quota_per_unit = find_number(status, ("quota_per_unit",)) or DEFAULT_NEWAPI_QUOTA_PER_UNIT
@@ -252,11 +262,14 @@ def fetch_newapi_balance(base_url: str, username: str, password: str) -> float:
         )
     )
     auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
+    user_id = find_identifier(login_data, ("id", "user_id", "userId"))
+    extra_headers = {"New-Api-User": user_id} if user_id else None
 
     self_data = unwrap_api_data(
         http_json(
             join_url(base_url, "/api/user/self"),
             token=auth_token,
+            extra_headers=extra_headers,
             opener=opener,
         )
     )
