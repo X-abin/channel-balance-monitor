@@ -44,14 +44,26 @@ def http_json(path_or_url: str, method: str = "GET", body: Any = None, token: st
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
-    req = request.Request(url, data=payload, method=method, headers=headers)
-    try:
-        with request.urlopen(req, timeout=30) as resp:
-            raw = resp.read().decode("utf-8")
-            return json.loads(raw) if raw else None
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"HTTP {exc.code} {url}: {detail[:500]}") from exc
+    transient_codes = {502, 503, 504}
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        req = request.Request(url, data=payload, method=method, headers=headers)
+        try:
+            with request.urlopen(req, timeout=30) as resp:
+                raw = resp.read().decode("utf-8")
+                return json.loads(raw) if raw else None
+        except error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = RuntimeError(f"HTTP {exc.code} {url}: {detail[:500]}")
+            if exc.code not in transient_codes or attempt == 3:
+                raise last_error from exc
+        except error.URLError as exc:
+            last_error = RuntimeError(f"请求失败 {url}: {exc.reason}")
+            if attempt == 3:
+                raise last_error from exc
+        time.sleep(attempt * 5)
+
+    raise last_error or RuntimeError(f"请求失败 {url}")
 
 
 def login() -> str:
