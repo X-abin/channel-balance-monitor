@@ -67,11 +67,15 @@ function rowForAll(channel) {
   `;
 }
 
+function balanceValue(channel) {
+  return channel.balance === null || channel.balance === undefined ? Number.POSITIVE_INFINITY : Number(channel.balance);
+}
+
 function sortChannels(channels) {
   return [...channels].sort((a, b) => {
-    const av = a.balance === null || a.balance === undefined ? Number.POSITIVE_INFINITY : Number(a.balance);
-    const bv = b.balance === null || b.balance === undefined ? Number.POSITIVE_INFINITY : Number(b.balance);
-    return av - bv || String(a.name).localeCompare(String(b.name), "zh-CN");
+    const starred = Number(Boolean(b.isStarred)) - Number(Boolean(a.isStarred));
+    if (starred !== 0) return starred;
+    return balanceValue(a) - balanceValue(b) || String(a.name).localeCompare(String(b.name), "zh-CN");
   });
 }
 
@@ -100,8 +104,8 @@ function render(data) {
     els.summary.textContent = "所有可读取余额的渠道都高于提醒阈值。";
   }
 
-  els.alertNote.textContent = lowChannels.length > 0 ? "这些渠道需要优先处理" : "当前没有低余额渠道";
-  els.lowTable.innerHTML = lowChannels.length ? lowChannels.map(rowForLow).join("") : '<tr><td colspan="5">当前没有低余额渠道。</td></tr>';
+  els.alertNote.textContent = lowChannels.length > 0 ? "星标渠道会优先显示和提醒" : "当前没有低余额渠道";
+  els.lowTable.innerHTML = lowChannels.length ? sortChannels(lowChannels).map(rowForLow).join("") : '<tr><td colspan="5">当前没有低余额渠道。</td></tr>';
   els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="5">暂无渠道数据。</td></tr>';
 }
 

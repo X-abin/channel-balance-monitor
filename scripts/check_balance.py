@@ -118,6 +118,12 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def channel_priority(channel: dict[str, Any]) -> tuple[int, float, str]:
+    balance = channel["balance"]
+    balance_value = float("inf") if balance is None else float(balance)
+    return (0 if channel.get("isStarred") else 1, balance_value, str(channel["name"]).lower())
+
+
 def should_notify(channel: dict[str, Any], state: dict[str, Any], checked_at: str) -> bool:
     key = str(channel["id"])
     previous = state.get(key, {}) if isinstance(state.get(key), dict) else {}
@@ -186,9 +192,9 @@ def main() -> int:
         token = login()
         data = http_json("/api/channels/search", token=token)
         channels = [normalize_channel(item) for item in extract_channels(data)]
-        low_channels = [channel for channel in channels if channel["isLow"]]
+        low_channels = sorted([channel for channel in channels if channel["isLow"]], key=channel_priority)
         state = read_json(STATE_PATH, {})
-        notify_channels = [channel for channel in low_channels if should_notify(channel, state, checked_at)]
+        notify_channels = sorted([channel for channel in low_channels if should_notify(channel, state, checked_at)], key=channel_priority)
 
         if notify_channels:
             send_telegram(format_message(notify_channels, checked_at))
