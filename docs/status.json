@@ -1,9 +1,9 @@
 {
   "ok": false,
-  "checkedAt": "2026-08-20T05:07:51+00:00",
+  "checkedAt": "2026-08-20T05:29:27+00:00",
   "baseUrl": "https://uptime.maolaoapi.com",
   "threshold": 30.0,
   "channels": [],
   "lowChannels": [],
-  "error": "缺少 UPTIME_USERNAME / UPTIME_PASSWORD，或 UPTIME_TOKEN。"
+  "error": "HTTP 502 https://uptime.maolaoapi.com/api/auth/login: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
 }
