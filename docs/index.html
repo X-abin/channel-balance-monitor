@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>渠道余额监测</title>
-    <link rel="stylesheet" href="styles.css?v=20260820-upstream" />
+    <link rel="stylesheet" href="styles.css?v=20260822-refresh-desc" />
   </head>
   <body>
     <main class="page">
@@ -14,7 +14,10 @@
           <h1>渠道余额监测</h1>
           <p class="summary" id="summary">正在读取最近一次检查结果...</p>
         </div>
-        <div class="status-pill" id="status-pill">读取中</div>
+        <div class="hero-actions">
+          <button class="refresh-button" id="refresh-button" type="button">手动刷新</button>
+          <div class="status-pill" id="status-pill">读取中</div>
+        </div>
       </section>
 
       <section class="metrics" aria-label="概览">
@@ -63,7 +66,7 @@
       <section class="panel">
         <div class="panel-head">
           <h2>全部渠道</h2>
-          <span>按余额从低到高排列</span>
+          <span>按余额从高到低排列</span>
         </div>
         <div class="table-wrap">
           <table>
@@ -85,6 +88,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=20260820-upstream"></script>
+    <script src="app.js?v=20260822-refresh-desc"></script>
   </body>
 </html>

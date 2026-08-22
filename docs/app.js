@@ -1,6 +1,7 @@
 const els = {
   summary: document.querySelector("#summary"),
   pill: document.querySelector("#status-pill"),
+  refreshButton: document.querySelector("#refresh-button"),
   total: document.querySelector("#total-count"),
   low: document.querySelector("#low-count"),
   threshold: document.querySelector("#threshold"),
@@ -81,14 +82,16 @@ function rowForAll(channel) {
 }
 
 function balanceValue(channel) {
-  return channel.balance === null || channel.balance === undefined ? Number.POSITIVE_INFINITY : Number(channel.balance);
+  return channel.balance === null || channel.balance === undefined ? Number.NEGATIVE_INFINITY : Number(channel.balance);
 }
 
 function sortChannels(channels) {
   return [...channels].sort((a, b) => {
+    const balanceDiff = balanceValue(b) - balanceValue(a);
+    if (balanceDiff !== 0) return balanceDiff;
     const starred = Number(Boolean(b.isStarred)) - Number(Boolean(a.isStarred));
     if (starred !== 0) return starred;
-    return balanceValue(a) - balanceValue(b) || String(a.name).localeCompare(String(b.name), "zh-CN");
+    return String(a.name).localeCompare(String(b.name), "zh-CN");
   });
 }
 
@@ -126,20 +129,38 @@ function render(data) {
   els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="6">暂无渠道数据。</td></tr>';
 }
 
-fetch("status.json", { cache: "no-store" })
-  .then((response) => {
-    if (!response.ok) throw new Error("还没有生成检查结果。请等待第一次自动检查完成。");
-    return response.json();
-  })
-  .then(render)
-  .catch((err) => {
-    els.pill.className = "status-pill error";
-    els.pill.textContent = "未配置";
-    els.summary.textContent = err.message;
-    els.total.textContent = "-";
-    els.low.textContent = "-";
-    els.threshold.textContent = "30 元";
-    els.checkedAt.textContent = "-";
-    els.lowTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
-    els.allTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
-  });
+function setLoadingState(isLoading) {
+  if (!els.refreshButton) return;
+  els.refreshButton.disabled = isLoading;
+  els.refreshButton.textContent = isLoading ? "读取中" : "手动刷新";
+}
+
+function loadStatus() {
+  setLoadingState(true);
+  const url = new URL("status.json", window.location.href);
+  url.searchParams.set("v", Date.now().toString());
+  return fetch(url.toString(), { cache: "no-store" })
+    .then((response) => {
+      if (!response.ok) throw new Error("还没有生成检查结果。请等待第一次自动检查完成。");
+      return response.json();
+    })
+    .then(render)
+    .catch((err) => {
+      els.pill.className = "status-pill error";
+      els.pill.textContent = "未配置";
+      els.summary.textContent = err.message;
+      els.total.textContent = "-";
+      els.low.textContent = "-";
+      els.threshold.textContent = "30 元";
+      els.checkedAt.textContent = "-";
+      els.lowTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
+      els.allTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
+    })
+    .finally(() => setLoadingState(false));
+}
+
+if (els.refreshButton) {
+  els.refreshButton.addEventListener("click", loadStatus);
+}
+
+loadStatus();

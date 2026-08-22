@@ -39,6 +39,13 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
 .eyebrow {
   margin: 0 0 8px;
   color: var(--accent);
@@ -90,6 +97,26 @@ h1 {
   border-color: #fecaca;
   background: #fef2f2;
   color: #b91c1c;
+}
+
+.refresh-button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  border-color: #c5ccda;
+}
+
+.refresh-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .metrics {
@@ -237,6 +264,11 @@ td.mono {
   .panel-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .hero-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   h1 {
