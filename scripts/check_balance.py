@@ -19,6 +19,7 @@ DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
 DEFAULT_NEWAPI_QUOTA_PER_UNIT = float(os.getenv("NEWAPI_DEFAULT_QUOTA_PER_UNIT", "500000"))
+NEWAPI_LOGIN_CACHE: dict[tuple[str, str, str, str], tuple[Any, Any, str | None]] = {}
 DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -154,21 +155,47 @@ def join_url(base_url: str, path: str) -> str:
     return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
 
 
-def fetch_sub2api_balance(base_url: str, username: str, password: str) -> float:
-    login_data = unwrap_api_data(
-        http_json(
-            join_url(base_url, "/api/v1/auth/login"),
-            method="POST",
-            body={"email": username, "password": password},
-        )
+def get_detail_value(detail: dict[str, Any], channel: dict[str, Any], preferred_keys: tuple[str, ...]) -> str | None:
+    channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
+    for source in (detail, channel_data, channel):
+        value = find_text(source, preferred_keys)
+        if value:
+            return value
+    return None
+
+
+def get_detail_token(detail: dict[str, Any], channel: dict[str, Any]) -> str | None:
+    return get_detail_value(
+        detail,
+        channel,
+        (
+            "savedToken",
+            "savedAccessToken",
+            "accessToken",
+            "authToken",
+            "token",
+            "apiToken",
+        ),
     )
-    if not isinstance(login_data, dict) or not login_data.get("access_token"):
-        raise RuntimeError("上游登录成功响应中没有 access_token")
+
+
+def fetch_sub2api_balance(base_url: str, username: str, password: str, access_token: str | None = None) -> float:
+    if access_token is None:
+        login_data = unwrap_api_data(
+            http_json(
+                join_url(base_url, "/api/v1/auth/login"),
+                method="POST",
+                body={"email": username, "password": password},
+            )
+        )
+        if not isinstance(login_data, dict) or not login_data.get("access_token"):
+            raise RuntimeError("上游登录成功响应中没有 access_token")
+        access_token = str(login_data["access_token"])
 
     profile_data = unwrap_api_data(
         http_json(
             join_url(base_url, "/api/v1/user/profile"),
-            token=str(login_data["access_token"]),
+            token=access_token,
             extra_headers={"X-User-UI-Request": "1"},
         )
     )
@@ -243,7 +270,7 @@ def extract_newapi_balance(self_data: Any, status_data: Any) -> float:
     return newapi_quota_to_balance(quota, status_data)
 
 
-def fetch_newapi_balance(base_url: str, username: str, password: str) -> float:
+def fetch_newapi_balance(base_url: str, username: str, password: str, auth_token: str | None = None, user_id: str | None = None) -> float:
     cookie_jar = CookieJar()
     opener = request.build_opener(request.HTTPCookieProcessor(cookie_jar))
 
@@ -253,16 +280,29 @@ def fetch_newapi_balance(base_url: str, username: str, password: str) -> float:
     except Exception:
         status_data = {}
 
-    login_data = unwrap_api_data(
-        http_json(
-            join_url(base_url, "/api/user/login"),
-            method="POST",
-            body={"username": username, "password": password},
-            opener=opener,
-        )
-    )
-    auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
-    user_id = find_identifier(login_data, ("id", "user_id", "userId"))
+    if auth_token is None:
+        cache_key = (base_url.rstrip("/"), username, password, "newapi")
+        cached = NEWAPI_LOGIN_CACHE.get(cache_key)
+        if cached is not None:
+            cached_status, cached_login, cached_user_id = cached
+            status_data = cached_status if cached_status is not None else status_data
+            login_data = cached_login
+            auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
+            user_id = user_id or cached_user_id
+        else:
+            login_data = unwrap_api_data(
+                http_json(
+                    join_url(base_url, "/api/user/login"),
+                    method="POST",
+                    body={"username": username, "email": username, "password": password},
+                    opener=opener,
+                )
+            )
+            auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
+            user_id = user_id or find_identifier(login_data, ("id", "user_id", "userId"))
+            NEWAPI_LOGIN_CACHE[cache_key] = (status_data, login_data, user_id)
+    elif not user_id:
+        user_id = None
     extra_headers = {"New-Api-User": user_id} if user_id else None
 
     self_data = unwrap_api_data(
@@ -296,16 +336,21 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
     base_url = channel_data.get("baseUrl") or channel.get("baseUrl")
     platform = str(channel_data.get("platform") or channel.get("platform") or "").lower()
     username, password = get_detail_credentials(detail, channel_data or channel)
-    if not base_url or not username or not password:
+    token = get_detail_token(detail, channel_data or channel)
+    if not base_url:
+        channel["balanceSource"] = "upstream_failed"
+        channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
+        return channel
+    if not token and (not username or not password):
         channel["balanceSource"] = "upstream_failed"
         channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
         return channel
 
     try:
         if "sub2" in platform:
-            upstream_balance = fetch_sub2api_balance(str(base_url), username, password)
+            upstream_balance = fetch_sub2api_balance(str(base_url), username, password, access_token=token)
         elif "newapi" in platform or "new_api" in platform or "new api" in platform:
-            upstream_balance = fetch_newapi_balance(str(base_url), username, password)
+            upstream_balance = fetch_newapi_balance(str(base_url), username, password, auth_token=token)
         else:
             channel["balanceSource"] = "upstream_failed"
             channel["upstreamBalanceError"] = "暂未支持该平台类型的上游实时余额"
