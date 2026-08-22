@@ -114,6 +114,16 @@ h1 {
   border-color: #c5ccda;
 }
 
+.refresh-button.primary {
+  border-color: #bfe7df;
+  background: #f3fffc;
+  color: var(--accent);
+}
+
+.refresh-button.primary:hover {
+  border-color: #8fd6ca;
+}
+
 .refresh-button:disabled {
   cursor: wait;
   opacity: 0.7;

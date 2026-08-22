@@ -2,6 +2,7 @@ const els = {
   summary: document.querySelector("#summary"),
   pill: document.querySelector("#status-pill"),
   refreshButton: document.querySelector("#refresh-button"),
+  runButton: document.querySelector("#run-button"),
   total: document.querySelector("#total-count"),
   low: document.querySelector("#low-count"),
   threshold: document.querySelector("#threshold"),
@@ -10,6 +11,16 @@ const els = {
   allTable: document.querySelector("#all-table"),
   alertNote: document.querySelector("#alert-note"),
 };
+
+const GITHUB_OWNER = "X-abin";
+const GITHUB_REPO = "channel-balance-monitor";
+const GITHUB_BRANCH = "main";
+const GITHUB_WORKFLOW = "check-balance.yml";
+const CURRENT_STATUS_URL = new URL("status.json", window.location.href).toString();
+const REMOTE_STATUS_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/docs/status.json?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
+const WORKFLOW_DISPATCH_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/${GITHUB_WORKFLOW}/dispatches`;
+const GITHUB_TOKEN_KEY = "channel_balance_github_token";
+let lastCheckedAt = null;
 
 function formatTime(value) {
   if (!value) return "-";
@@ -127,40 +138,150 @@ function render(data) {
   els.alertNote.textContent = lowChannels.length > 0 ? "当前只监测后台已星标渠道，余额只使用上游实时数据" : "当前没有低余额星标渠道";
   els.lowTable.innerHTML = lowChannels.length ? sortChannels(lowChannels).map(rowForLow).join("") : '<tr><td colspan="6">当前没有低余额渠道。</td></tr>';
   els.allTable.innerHTML = channels.length ? sortChannels(channels).map(rowForAll).join("") : '<tr><td colspan="6">暂无渠道数据。</td></tr>';
+  lastCheckedAt = data.checkedAt || lastCheckedAt;
 }
 
 function setLoadingState(isLoading) {
   if (!els.refreshButton) return;
   els.refreshButton.disabled = isLoading;
-  els.refreshButton.textContent = isLoading ? "读取中" : "手动刷新";
+  els.refreshButton.textContent = isLoading ? "读取中" : "刷新结果";
 }
 
-function loadStatus() {
+function setRunState(isRunning) {
+  if (!els.runButton) return;
+  els.runButton.disabled = isRunning;
+  els.runButton.textContent = isRunning ? "检测中" : "立即检测";
+}
+
+async function fetchStatusFromCurrentPage() {
+  const response = await fetch(`${CURRENT_STATUS_URL}${CURRENT_STATUS_URL.includes("?") ? "&" : "?"}v=${Date.now()}`, { cache: "no-store" });
+  if (!response.ok) throw new Error("还没有生成检查结果。请等待第一次自动检查完成。");
+  return response.json();
+}
+
+async function fetchStatusFromGitHub() {
+  const response = await fetch(`${REMOTE_STATUS_URL}&t=${Date.now()}`, {
+    cache: "no-store",
+    headers: { Accept: "application/vnd.github+json" },
+  });
+  if (!response.ok) {
+    throw new Error("GitHub 状态读取失败。");
+  }
+  const payload = await response.json();
+  if (!payload || typeof payload.content !== "string") {
+    throw new Error("GitHub 状态格式不正确。");
+  }
+  const binary = atob(payload.content.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  const text = new TextDecoder("utf-8").decode(bytes);
+  return JSON.parse(text);
+}
+
+async function fetchLatestStatus(preferRemote = false) {
+  if (!preferRemote) {
+    try {
+      return await fetchStatusFromCurrentPage();
+    } catch (err) {
+      return fetchStatusFromGitHub();
+    }
+  }
+  return fetchStatusFromGitHub();
+}
+
+async function loadStatus(preferRemote = false) {
   setLoadingState(true);
-  const url = new URL("status.json", window.location.href);
-  url.searchParams.set("v", Date.now().toString());
-  return fetch(url.toString(), { cache: "no-store" })
-    .then((response) => {
-      if (!response.ok) throw new Error("还没有生成检查结果。请等待第一次自动检查完成。");
-      return response.json();
-    })
-    .then(render)
-    .catch((err) => {
-      els.pill.className = "status-pill error";
-      els.pill.textContent = "未配置";
-      els.summary.textContent = err.message;
-      els.total.textContent = "-";
-      els.low.textContent = "-";
-      els.threshold.textContent = "30 元";
-      els.checkedAt.textContent = "-";
-      els.lowTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
-      els.allTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
-    })
-    .finally(() => setLoadingState(false));
+  try {
+    const data = await fetchLatestStatus(preferRemote);
+    render(data);
+  } catch (err) {
+    els.pill.className = "status-pill error";
+    els.pill.textContent = "未配置";
+    els.summary.textContent = err.message;
+    els.total.textContent = "-";
+    els.low.textContent = "-";
+    els.threshold.textContent = "30 元";
+    els.checkedAt.textContent = "-";
+    els.lowTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
+    els.allTable.innerHTML = '<tr><td colspan="6">等待第一次检查结果。</td></tr>';
+  } finally {
+    setLoadingState(false);
+  }
+}
+
+function getGithubToken() {
+  try {
+    return sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+
+function saveGithubToken(token) {
+  try {
+    sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
+  } catch {
+    // ignore
+  }
+}
+
+async function triggerWorkflow() {
+  let token = getGithubToken();
+  if (!token) {
+    token = window.prompt("请输入 GitHub Token（需要 actions:write 权限）", "") || "";
+    token = token.trim();
+    if (!token) return;
+    saveGithubToken(token);
+  }
+
+  const currentCheckedAt = lastCheckedAt;
+  setRunState(true);
+  els.summary.textContent = "已请求重新检测，正在等待结果...";
+
+  try {
+    const response = await fetch(WORKFLOW_DISPATCH_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({ ref: GITHUB_BRANCH }),
+    });
+    if (!response.ok && response.status !== 204) {
+      const text = await response.text();
+      throw new Error(text || "触发检测失败");
+    }
+
+    const deadline = Date.now() + 15 * 60 * 1000;
+    while (Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 8000));
+      try {
+        const data = await fetchLatestStatus(true);
+        if (data.checkedAt && data.checkedAt !== currentCheckedAt) {
+          render(data);
+          return;
+        }
+      } catch {
+        // keep waiting
+      }
+    }
+    throw new Error("已触发检测，但等待结果超时。");
+  } catch (err) {
+    els.pill.className = "status-pill error";
+    els.pill.textContent = "失败";
+    els.summary.textContent = err.message || "触发检测失败。";
+  } finally {
+    setRunState(false);
+  }
 }
 
 if (els.refreshButton) {
-  els.refreshButton.addEventListener("click", loadStatus);
+  els.refreshButton.addEventListener("click", () => loadStatus(false));
 }
 
-loadStatus();
+if (els.runButton) {
+  els.runButton.addEventListener("click", triggerWorkflow);
+}
+
+loadStatus(false);
