@@ -51,6 +51,8 @@ def http_json(
     token: str | None = None,
     extra_headers: dict[str, str] | None = None,
     opener: Any = None,
+    timeout: int = 30,
+    max_attempts: int = 3,
 ) -> Any:
     url = path_or_url if path_or_url.startswith("http") else f"{BASE_URL}{path_or_url}"
     payload = None
@@ -65,21 +67,21 @@ def http_json(
 
     transient_codes = {502, 503, 504}
     last_error: Exception | None = None
-    for attempt in range(1, 4):
+    for attempt in range(1, max_attempts + 1):
         req = request.Request(url, data=payload, method=method, headers=headers)
         try:
             open_request = opener.open if opener else request.urlopen
-            with open_request(req, timeout=30) as resp:
+            with open_request(req, timeout=timeout) as resp:
                 raw = resp.read().decode("utf-8")
                 return json.loads(raw) if raw else None
         except error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
             last_error = RuntimeError(f"HTTP {exc.code} {url}: {detail[:500]}")
-            if exc.code not in transient_codes or attempt == 3:
+            if exc.code not in transient_codes or attempt == max_attempts:
                 raise last_error from exc
         except error.URLError as exc:
             last_error = RuntimeError(f"请求失败 {url}: {exc.reason}")
-            if attempt == 3:
+            if attempt == max_attempts:
                 raise last_error from exc
         time.sleep(attempt * 5)
 
@@ -292,6 +294,8 @@ def logout_newapi_session(
             token=auth_token,
             extra_headers=extra_headers,
             opener=opener,
+            timeout=5,
+            max_attempts=1,
         )
         return
     except Exception:
@@ -303,6 +307,8 @@ def logout_newapi_session(
             token=auth_token,
             extra_headers=extra_headers,
             opener=opener,
+            timeout=5,
+            max_attempts=1,
         )
     except Exception:
         pass
