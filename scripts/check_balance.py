@@ -19,7 +19,6 @@ DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
 DEFAULT_NEWAPI_QUOTA_PER_UNIT = float(os.getenv("NEWAPI_DEFAULT_QUOTA_PER_UNIT", "500000"))
-NEWAPI_LOGIN_CACHE: dict[tuple[str, str, str, str], tuple[Any, Any, str | None]] = {}
 DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -270,9 +269,49 @@ def extract_newapi_balance(self_data: Any, status_data: Any) -> float:
     return newapi_quota_to_balance(quota, status_data)
 
 
+def logout_newapi_session(
+    base_url: str,
+    opener: Any,
+    auth_token: str | None,
+    user_id: str | None,
+    session_id: str | None,
+) -> None:
+    if not auth_token:
+        return
+
+    extra_headers: dict[str, str] = {}
+    if user_id:
+        extra_headers["New-Api-User"] = user_id
+    if session_id:
+        extra_headers["X-Auth-Session"] = session_id
+
+    try:
+        http_json(
+            join_url(base_url, "/api/user/auth/logout"),
+            method="POST",
+            token=auth_token,
+            extra_headers=extra_headers,
+            opener=opener,
+        )
+        return
+    except Exception:
+        pass
+
+    try:
+        http_json(
+            join_url(base_url, "/api/user/logout"),
+            token=auth_token,
+            extra_headers=extra_headers,
+            opener=opener,
+        )
+    except Exception:
+        pass
+
+
 def fetch_newapi_balance(base_url: str, username: str, password: str, auth_token: str | None = None, user_id: str | None = None) -> float:
     cookie_jar = CookieJar()
     opener = request.build_opener(request.HTTPCookieProcessor(cookie_jar))
+    should_logout = auth_token is None
 
     status_data: Any = {}
     try:
@@ -281,39 +320,34 @@ def fetch_newapi_balance(base_url: str, username: str, password: str, auth_token
         status_data = {}
 
     if auth_token is None:
-        cache_key = (base_url.rstrip("/"), username, password, "newapi")
-        cached = NEWAPI_LOGIN_CACHE.get(cache_key)
-        if cached is not None:
-            cached_status, cached_login, cached_user_id = cached
-            status_data = cached_status if cached_status is not None else status_data
-            login_data = cached_login
-            auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
-            user_id = user_id or cached_user_id
-        else:
-            login_data = unwrap_api_data(
-                http_json(
-                    join_url(base_url, "/api/user/login"),
-                    method="POST",
-                    body={"username": username, "email": username, "password": password},
-                    opener=opener,
-                )
+        login_data = unwrap_api_data(
+            http_json(
+                join_url(base_url, "/api/user/login"),
+                method="POST",
+                body={"username": username, "email": username, "password": password},
+                opener=opener,
             )
-            auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
-            user_id = user_id or find_identifier(login_data, ("id", "user_id", "userId"))
-            NEWAPI_LOGIN_CACHE[cache_key] = (status_data, login_data, user_id)
-    elif not user_id:
-        user_id = None
+        )
+        auth_token = find_text(login_data, ("token", "access_token", "auth_token"))
+        user_id = user_id or find_identifier(login_data, ("id", "user_id", "userId"))
+        session_id = find_text(login_data, ("sid", "session_id", "sessionId"))
+    else:
+        session_id = None
     extra_headers = {"New-Api-User": user_id} if user_id else None
 
-    self_data = unwrap_api_data(
-        http_json(
-            join_url(base_url, "/api/user/self"),
-            token=auth_token,
-            extra_headers=extra_headers,
-            opener=opener,
+    try:
+        self_data = unwrap_api_data(
+            http_json(
+                join_url(base_url, "/api/user/self"),
+                token=auth_token,
+                extra_headers=extra_headers,
+                opener=opener,
+            )
         )
-    )
-    return extract_newapi_balance(self_data, status_data)
+        return extract_newapi_balance(self_data, status_data)
+    finally:
+        if should_logout:
+            logout_newapi_session(base_url, opener, auth_token, user_id, session_id)
 
 
 def get_detail_credentials(detail: dict[str, Any], channel: dict[str, Any]) -> tuple[str | None, str | None]:
