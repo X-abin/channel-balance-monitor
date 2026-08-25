@@ -19,6 +19,10 @@ DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
 DEFAULT_NEWAPI_QUOTA_PER_UNIT = float(os.getenv("NEWAPI_DEFAULT_QUOTA_PER_UNIT", "500000"))
+MANUAL_BASE_URL_OVERRIDES = {
+    "23": "https://dzzzz.cf",
+    "天才程序员": "https://dzzzz.cf",
+}
 DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -154,6 +158,14 @@ def find_number(data: Any, preferred_keys: tuple[str, ...]) -> float | None:
 
 def join_url(base_url: str, path: str) -> str:
     return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
+
+def get_manual_base_url_override(channel: dict[str, Any]) -> str | None:
+    for key in (channel.get("id"), channel.get("name")):
+        override = MANUAL_BASE_URL_OVERRIDES.get(str(key))
+        if override:
+            return override
+    return None
 
 
 def get_detail_value(detail: dict[str, Any], channel: dict[str, Any], preferred_keys: tuple[str, ...]) -> str | None:
@@ -374,6 +386,9 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
 
     channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
     base_url = channel_data.get("baseUrl") or channel.get("baseUrl")
+    base_url = get_manual_base_url_override(channel) or get_manual_base_url_override(channel_data) or base_url
+    if base_url:
+        channel["baseUrl"] = base_url
     platform = str(channel_data.get("platform") or channel.get("platform") or "").lower()
     username, password = get_detail_credentials(detail, channel_data or channel)
     token = get_detail_token(detail, channel_data or channel)
@@ -427,6 +442,9 @@ def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
     }
     if not UPSTREAM_BALANCE_ONLY:
         channel["dashboardBalance"] = dashboard_balance
+    manual_base_url = get_manual_base_url_override(channel)
+    if manual_base_url:
+        channel["baseUrl"] = manual_base_url
     return channel
 
 

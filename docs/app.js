@@ -3,6 +3,10 @@ const els = {
   pill: document.querySelector("#status-pill"),
   refreshButton: document.querySelector("#refresh-button"),
   runButton: document.querySelector("#run-button"),
+  tokenInput: document.querySelector("#github-token"),
+  saveTokenButton: document.querySelector("#save-token-button"),
+  clearTokenButton: document.querySelector("#clear-token-button"),
+  tokenHint: document.querySelector("#token-hint"),
   total: document.querySelector("#total-count"),
   low: document.querySelector("#low-count"),
   threshold: document.querySelector("#threshold"),
@@ -98,7 +102,7 @@ function balanceValue(channel) {
 
 function sortChannels(channels) {
   return [...channels].sort((a, b) => {
-    const balanceDiff = balanceValue(b) - balanceValue(a);
+    const balanceDiff = balanceValue(a) - balanceValue(b);
     if (balanceDiff !== 0) return balanceDiff;
     const starred = Number(Boolean(b.isStarred)) - Number(Boolean(a.isStarred));
     if (starred !== 0) return starred;
@@ -224,13 +228,49 @@ function saveGithubToken(token) {
   }
 }
 
+function clearGithubToken() {
+  try {
+    sessionStorage.removeItem(GITHUB_TOKEN_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+function syncTokenInput() {
+  if (!els.tokenInput) return;
+  els.tokenInput.value = getGithubToken();
+  updateTokenHint();
+}
+
+function updateTokenHint(message) {
+  if (!els.tokenHint) return;
+  if (message) {
+    els.tokenHint.textContent = message;
+    return;
+  }
+  els.tokenHint.textContent = getGithubToken()
+    ? "Token 已保存，点“保存 Token”会更新当前值。"
+    : "未保存 Token 时，点“立即检测”会先询问你输入。";
+}
+
+function setTokenErrorState(message) {
+  if (!els.tokenInput) return;
+  els.tokenInput.classList.add("is-error");
+  updateTokenHint(message);
+  els.tokenInput.focus();
+  els.tokenInput.select();
+}
+
 async function triggerWorkflow() {
-  let token = getGithubToken();
+  const typedToken = els.tokenInput ? els.tokenInput.value.trim() : "";
+  let token = typedToken || getGithubToken();
+  if (typedToken) {
+    saveGithubToken(typedToken);
+  }
   if (!token) {
-    token = window.prompt("请输入 GitHub Token（需要 actions:write 权限）", "") || "";
-    token = token.trim();
-    if (!token) return;
-    saveGithubToken(token);
+    updateTokenHint("请先在上方填写 GitHub Token，再点“保存 Token”或“立即检测”。");
+    setTokenErrorState("请先填写 GitHub Token。");
+    return;
   }
 
   const currentCheckedAt = lastCheckedAt;
@@ -250,6 +290,12 @@ async function triggerWorkflow() {
     });
     if (!response.ok && response.status !== 204) {
       const text = await response.text();
+      if (response.status === 401) {
+        clearGithubToken();
+        syncTokenInput();
+        updateTokenHint("GitHub 拒绝了这个 Token，请重新填写一个有效的令牌。");
+        throw new Error("Token 无效或权限不够，请重新填写新的 GitHub Token。");
+      }
       throw new Error(text || "触发检测失败");
     }
 
@@ -284,4 +330,45 @@ if (els.runButton) {
   els.runButton.addEventListener("click", triggerWorkflow);
 }
 
+if (els.saveTokenButton) {
+  els.saveTokenButton.addEventListener("click", () => {
+    const token = els.tokenInput ? els.tokenInput.value.trim() : "";
+    if (!token) {
+      setTokenErrorState("请先粘贴 GitHub Token。");
+      return;
+    }
+    saveGithubToken(token);
+    updateTokenHint("Token 已保存，可以直接点“立即检测”。");
+    if (els.tokenInput) {
+      els.tokenInput.classList.remove("is-error");
+    }
+  });
+}
+
+if (els.clearTokenButton) {
+  els.clearTokenButton.addEventListener("click", () => {
+    clearGithubToken();
+    if (els.tokenInput) {
+      els.tokenInput.value = "";
+      els.tokenInput.classList.remove("is-error");
+      els.tokenInput.focus();
+    }
+    updateTokenHint("Token 已清除，请重新填写。");
+  });
+}
+
+if (els.tokenInput) {
+  els.tokenInput.addEventListener("input", () => {
+    els.tokenInput.classList.remove("is-error");
+    updateTokenHint();
+  });
+  els.tokenInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      triggerWorkflow();
+    }
+  });
+}
+
+syncTokenInput();
 loadStatus(false);

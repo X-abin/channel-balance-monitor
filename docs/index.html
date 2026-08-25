@@ -21,6 +21,24 @@
         </div>
       </section>
 
+      <section class="panel token-panel" aria-label="GitHub Token 设置">
+        <div class="panel-head">
+          <h2>GitHub Token</h2>
+          <span>只保存在当前浏览器标签页</span>
+        </div>
+        <div class="token-row">
+          <label class="token-field" for="github-token">
+            <span>重新填写 Token</span>
+            <input id="github-token" type="password" autocomplete="off" spellcheck="false" placeholder="粘贴新的 GitHub Token" />
+          </label>
+          <div class="token-actions">
+            <button class="refresh-button primary" id="save-token-button" type="button">保存 Token</button>
+            <button class="refresh-button" id="clear-token-button" type="button">清除 Token</button>
+          </div>
+        </div>
+        <p class="token-hint" id="token-hint">未保存 Token 时，点“立即检测”会先询问你输入。</p>
+      </section>
+
       <section class="metrics" aria-label="概览">
         <div class="metric">
           <span>监测渠道</span>
@@ -67,7 +85,7 @@
       <section class="panel">
         <div class="panel-head">
           <h2>全部渠道</h2>
-          <span>按余额从高到低排列</span>
+          <span>按余额从低到高排列</span>
         </div>
         <div class="table-wrap">
           <table>

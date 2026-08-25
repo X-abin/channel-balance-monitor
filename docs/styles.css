@@ -166,6 +166,10 @@ h1 {
   overflow: hidden;
 }
 
+.token-panel {
+  margin-top: 16px;
+}
+
 .panel-head {
   display: flex;
   align-items: center;
@@ -182,6 +186,61 @@ h1 {
 .panel-head span {
   color: var(--muted);
   font-size: 13px;
+}
+
+.token-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 16px;
+}
+
+.token-field {
+  display: grid;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.token-field span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.token-field input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  padding: 11px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.token-field input:focus {
+  outline: 2px solid rgba(15, 118, 110, 0.15);
+  outline-offset: 1px;
+  border-color: #8fd6ca;
+}
+
+.token-field input.is-error {
+  border-color: #fca5a5;
+  background: #fffafa;
+}
+
+.token-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.token-hint {
+  padding: 0 16px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .table-wrap {
@@ -279,6 +338,19 @@ td.mono {
   .hero-actions {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .token-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .token-actions {
+    width: 100%;
+  }
+
+  .token-actions .refresh-button {
+    flex: 1;
   }
 
   h1 {
