@@ -40,7 +40,7 @@
 
 ## 网页手动检测
 
-页面右上角的 `立即检测` 可以直接触发一次 GitHub Actions 检测。首次使用时需要输入一个有 `actions:write` 权限的 GitHub Token，这个 token 只保存在当前浏览器会话里。
+页面右上角的 `立即检测` 可以直接触发一次 GitHub Actions 检测。首次使用时需要输入一个有 `actions:write` 权限的 GitHub Token，这个 token 会保存在当前浏览器里，之后重新打开网页也不用反复输入。
 
 ## 手动测试
 

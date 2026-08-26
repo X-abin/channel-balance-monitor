@@ -214,7 +214,7 @@ async function loadStatus(preferRemote = false) {
 
 function getGithubToken() {
   try {
-    return sessionStorage.getItem(GITHUB_TOKEN_KEY) || "";
+    return localStorage.getItem(GITHUB_TOKEN_KEY) || "";
   } catch {
     return "";
   }
@@ -222,7 +222,7 @@ function getGithubToken() {
 
 function saveGithubToken(token) {
   try {
-    sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
+    localStorage.setItem(GITHUB_TOKEN_KEY, token);
   } catch {
     // ignore
   }
@@ -230,7 +230,7 @@ function saveGithubToken(token) {
 
 function clearGithubToken() {
   try {
-    sessionStorage.removeItem(GITHUB_TOKEN_KEY);
+    localStorage.removeItem(GITHUB_TOKEN_KEY);
   } catch {
     // ignore
   }
