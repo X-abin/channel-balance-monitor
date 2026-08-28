@@ -87,7 +87,6 @@ UPSTREAM_BALANCE_ONLY: "true"
 - `Sub2API`
 - `NewApi`
 - `ThirdParty`
-
 ## 避免重复提醒
 
 默认同一个低余额渠道在持续低余额时，每 `12` 小时最多提醒一次。
