@@ -583,12 +583,22 @@ def should_notify(channel: dict[str, Any], state: dict[str, Any], checked_at: st
     key = str(channel["id"])
     previous = state.get(key, {}) if isinstance(state.get(key), dict) else {}
     if not channel["isLow"]:
-        state[key] = {"isLow": False, "lastRecoveredAt": checked_at, "lastNotifiedAt": previous.get("lastNotifiedAt")}
+        state[key] = {
+            "isLow": False,
+            "lastRecoveredAt": checked_at,
+            "lastNotifiedAt": previous.get("lastNotifiedAt"),
+            "hadRecovery": True,
+        }
         return False
 
     last_notified = previous.get("lastNotifiedAt")
+    had_recovery = bool(previous.get("hadRecovery"))
     if not last_notified:
-        state[key] = {"isLow": True, "lastNotifiedAt": checked_at}
+        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": had_recovery}
+        return True
+
+    if had_recovery:
+        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": False}
         return True
 
     try:
@@ -598,10 +608,10 @@ def should_notify(channel: dict[str, Any], state: dict[str, Any], checked_at: st
         elapsed_hours = COOLDOWN_HOURS + 1
 
     if elapsed_hours >= COOLDOWN_HOURS:
-        state[key] = {"isLow": True, "lastNotifiedAt": checked_at}
+        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": False}
         return True
 
-    state[key] = {**previous, "isLow": True}
+    state[key] = {**previous, "isLow": True, "hadRecovery": had_recovery}
     return False
 
 
