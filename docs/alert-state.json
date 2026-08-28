@@ -93,7 +93,8 @@
   },
   "1": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-28T13:29:54+00:00"
+    "lastNotifiedAt": "2026-08-28T13:29:54+00:00",
+    "hadRecovery": false
   },
   "126": {
     "isLow": true,
@@ -105,7 +106,8 @@
   },
   "29": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-28T13:29:54+00:00"
+    "lastNotifiedAt": "2026-08-28T13:29:54+00:00",
+    "hadRecovery": false
   },
   "37": {
     "isLow": true,
