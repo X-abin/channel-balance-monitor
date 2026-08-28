@@ -77,10 +77,20 @@ def http_json(
             open_request = opener.open if opener else request.urlopen
             with open_request(req, timeout=timeout) as resp:
                 raw = resp.read().decode("utf-8")
-                return json.loads(raw) if raw else None
+                try:
+                    return json.loads(raw) if raw else None
+                except json.JSONDecodeError as exc:
+                    detail = raw[:500].strip()
+                    if "<html" in detail.lower() or "<!doctype html" in detail.lower():
+                        raise RuntimeError(f"{url} 返回 HTML 页面，请检查上游地址或人机验证设置。") from exc
+                    raise RuntimeError(f"{url} 返回内容不是 JSON：{detail}") from exc
         except error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")
-            last_error = RuntimeError(f"HTTP {exc.code} {url}: {detail[:500]}")
+            if "<html" in detail[:500].lower() or "<!doctype html" in detail[:500].lower():
+                message = f"HTTP {exc.code} {url}: 返回 HTML 页面，可能被 Cloudflare/验证码拦截。"
+            else:
+                message = f"HTTP {exc.code} {url}: {detail[:500]}"
+            last_error = RuntimeError(message)
             if exc.code not in transient_codes or attempt == max_attempts:
                 raise last_error from exc
         except error.URLError as exc:
@@ -192,8 +202,49 @@ def get_detail_token(detail: dict[str, Any], channel: dict[str, Any]) -> str | N
     )
 
 
-def fetch_sub2api_balance(base_url: str, username: str, password: str, access_token: str | None = None) -> float:
+def get_detail_refresh_token(detail: dict[str, Any], channel: dict[str, Any]) -> str | None:
+    return get_detail_value(
+        detail,
+        channel,
+        (
+            "savedRefreshToken",
+            "savedRfToken",
+            "savedRftoken",
+            "refreshToken",
+            "refresh_token",
+            "rfToken",
+            "rftoken",
+            "refresh",
+        ),
+    )
+
+
+def extract_access_token(data: Any) -> str | None:
+    return find_text(data, ("access_token", "accessToken", "token", "authToken"))
+
+
+def fetch_sub2api_balance(
+    base_url: str,
+    username: str | None,
+    password: str | None,
+    access_token: str | None = None,
+    refresh_token: str | None = None,
+) -> float:
+    if access_token is None and refresh_token:
+        refresh_data = unwrap_api_data(
+            http_json(
+                join_url(base_url, "/api/v1/auth/refresh"),
+                method="POST",
+                body={"refresh_token": refresh_token},
+            )
+        )
+        access_token = extract_access_token(refresh_data)
+        if not access_token:
+            raise RuntimeError("Sub2API refresh 成功响应中没有 access_token")
+
     if access_token is None:
+        if not username or not password:
+            raise RuntimeError("缺少上游地址、账号或密码")
         login_data = unwrap_api_data(
             http_json(
                 join_url(base_url, "/api/v1/auth/login"),
@@ -281,6 +332,77 @@ def extract_newapi_balance(self_data: Any, status_data: Any) -> float:
     if quota is None:
         raise RuntimeError("上游用户信息中没有找到余额或 quota 字段")
     return newapi_quota_to_balance(quota, status_data)
+
+
+def extract_thirdparty_balance(data: Any) -> float:
+    direct_balance = find_number(
+        data,
+        (
+            "balance",
+            "remaining_balance",
+            "available_balance",
+            "total_available",
+            "credit",
+            "credits",
+            "amount",
+            "money",
+            "quota",
+            "remain_quota",
+            "remaining_quota",
+        ),
+    )
+    if direct_balance is None:
+        raise RuntimeError("ThirdParty 上游响应中没有找到余额字段")
+    return direct_balance
+
+
+def fetch_api_key_balance(base_url: str, api_key: str) -> float:
+    errors: list[str] = []
+    for path in (
+        "/api/v1/user/profile",
+        "/api/user/self",
+        "/v1/dashboard/billing/credit_grants",
+        "/dashboard/billing/credit_grants",
+        "/v1/usage",
+    ):
+        try:
+            data = unwrap_api_data(
+                http_json(
+                    join_url(base_url, path),
+                    token=api_key,
+                    extra_headers={"X-User-UI-Request": "1"},
+                    max_attempts=1,
+                )
+            )
+            return extract_thirdparty_balance(data)
+        except Exception as exc:
+            errors.append(f"{path}: {exc}")
+    raise RuntimeError("ThirdParty API Key 余额读取失败：" + "；".join(errors[:3]))
+
+
+def fetch_thirdparty_balance(
+    base_url: str,
+    username: str | None,
+    password: str | None,
+    access_token: str | None = None,
+    refresh_token: str | None = None,
+) -> float:
+    if refresh_token:
+        return fetch_sub2api_balance(base_url, username, password, refresh_token=refresh_token)
+    if access_token:
+        try:
+            return fetch_sub2api_balance(base_url, username, password, access_token=access_token)
+        except Exception as access_exc:
+            try:
+                return fetch_sub2api_balance(base_url, username, password, refresh_token=access_token)
+            except Exception:
+                try:
+                    return fetch_api_key_balance(base_url, access_token)
+                except Exception as api_key_exc:
+                    raise RuntimeError(f"ThirdParty token 读取失败：{access_exc}；{api_key_exc}") from api_key_exc
+    if username and password:
+        return fetch_sub2api_balance(base_url, username, password)
+    raise RuntimeError("缺少 ThirdParty 上游 token、refresh token 或账号密码")
 
 
 def logout_newapi_session(
@@ -392,20 +514,23 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
     platform = str(channel_data.get("platform") or channel.get("platform") or "").lower()
     username, password = get_detail_credentials(detail, channel_data or channel)
     token = get_detail_token(detail, channel_data or channel)
+    refresh_token = get_detail_refresh_token(detail, channel_data or channel)
     if not base_url:
         channel["balanceSource"] = "upstream_failed"
         channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
         return channel
-    if not token and (not username or not password):
+    if not token and not refresh_token and (not username or not password):
         channel["balanceSource"] = "upstream_failed"
         channel["upstreamBalanceError"] = "缺少上游地址、账号或密码"
         return channel
 
     try:
         if "sub2" in platform:
-            upstream_balance = fetch_sub2api_balance(str(base_url), username, password, access_token=token)
+            upstream_balance = fetch_sub2api_balance(str(base_url), username, password, access_token=token, refresh_token=refresh_token)
         elif "newapi" in platform or "new_api" in platform or "new api" in platform:
             upstream_balance = fetch_newapi_balance(str(base_url), username, password, auth_token=token)
+        elif "thirdparty" in platform or "third_party" in platform or "third party" in platform:
+            upstream_balance = fetch_thirdparty_balance(str(base_url), username, password, access_token=token, refresh_token=refresh_token)
         else:
             channel["balanceSource"] = "upstream_failed"
             channel["upstreamBalanceError"] = "暂未支持该平台类型的上游实时余额"

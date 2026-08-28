@@ -5,7 +5,7 @@
 - 每 30 分钟检查一次 `https://uptime.maolaoapi.com/dashboard` 的渠道余额
 - 默认只监测后台里已星标的渠道
 - 余额只使用上游站点实时读取结果，不再使用后台同步余额兜底
-- 当前支持实时读取 `Sub2API` 和 `NewApi` 类型渠道
+- 当前支持实时读取 `Sub2API`、`NewApi` 和 `ThirdParty` 类型渠道
 - 当渠道余额低于 `30 元` 时，发送 Telegram 提醒
 - GitHub Pages 展示最近一次检查结果
 
@@ -86,6 +86,7 @@ UPSTREAM_BALANCE_ONLY: "true"
 
 - `Sub2API`
 - `NewApi`
+- `ThirdParty`
 
 ## 避免重复提醒
 
