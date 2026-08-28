@@ -113,11 +113,15 @@ function sortChannels(channels) {
 function render(data) {
   const channels = Array.isArray(data.channels) ? data.channels : [];
   const lowChannels = Array.isArray(data.lowChannels) ? data.lowChannels : [];
+  const notifiedChannels = Array.isArray(data.notifiedChannels) ? data.notifiedChannels : [];
   const failedChannels = Array.isArray(data.failedChannels) ? data.failedChannels : channels.filter((channel) => channel.balanceSource === "upstream_failed");
   const starredLowCount = lowChannels.filter((channel) => channel.isStarred).length;
   const skippedChannels = Number(data.skippedChannels || 0);
   const skipText = data.monitorStarredOnly && skippedChannels > 0 ? `，已跳过 ${skippedChannels} 个未星标渠道` : "";
   const failText = data.upstreamBalanceOnly && failedChannels.length > 0 ? `，${failedChannels.length} 个渠道实时读取失败` : "";
+  const notifyText = notifiedChannels.length > 0
+    ? `，已发送 ${notifiedChannels.length} 条 Telegram 提醒`
+    : "，未重复发送 Telegram 提醒";
 
   els.total.textContent = channels.length;
   els.low.textContent = lowChannels.length;
@@ -132,7 +136,7 @@ function render(data) {
   } else if (lowChannels.length > 0) {
     els.pill.classList.add("warn");
     els.pill.textContent = "需要续费";
-    els.summary.textContent = `发现 ${lowChannels.length} 个星标渠道实时余额低于阈值${skipText}${failText}，已按配置发送 Telegram 提醒。`;
+    els.summary.textContent = `发现 ${lowChannels.length} 个星标渠道实时余额低于阈值${skipText}${failText}${notifyText}。`;
   } else {
     els.pill.classList.add("ok");
     els.pill.textContent = "正常";
