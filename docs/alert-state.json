@@ -89,7 +89,8 @@
   },
   "130": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-21T07:02:29+00:00"
+    "lastNotifiedAt": "2026-08-29T08:25:45+00:00",
+    "hadRecovery": false
   },
   "1": {
     "isLow": true,
@@ -102,7 +103,8 @@
   },
   "30": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-28T05:33:49+00:00"
+    "lastNotifiedAt": "2026-08-29T08:25:45+00:00",
+    "hadRecovery": false
   },
   "29": {
     "isLow": true,
@@ -123,7 +125,8 @@
   },
   "40": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-26T03:10:49+00:00"
+    "lastNotifiedAt": "2026-08-29T08:25:45+00:00",
+    "hadRecovery": false
   },
   "93": {
     "isLow": true,
