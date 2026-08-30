@@ -11,7 +11,6 @@ from urllib import error, parse, request
 
 BASE_URL = os.getenv("UPTIME_BASE_URL", "https://uptime.maolaoapi.com").rstrip("/")
 THRESHOLD = float(os.getenv("BALANCE_THRESHOLD", "30"))
-COOLDOWN_HOURS = float(os.getenv("NOTIFY_COOLDOWN_HOURS", "12"))
 UPSTREAM_BALANCE_ENABLED = os.getenv("UPSTREAM_BALANCE_ENABLED", "true").strip().lower() not in {"0", "false", "no"}
 UPSTREAM_BALANCE_ONLY = os.getenv("UPSTREAM_BALANCE_ONLY", "true").strip().lower() not in {"0", "false", "no"}
 MONITOR_STARRED_ONLY = os.getenv("MONITOR_STARRED_ONLY", "true").strip().lower() not in {"0", "false", "no"}
@@ -580,38 +579,12 @@ def channel_priority(channel: dict[str, Any]) -> tuple[int, float, str]:
 
 def should_notify(channel: dict[str, Any], state: dict[str, Any], checked_at: str) -> bool:
     key = str(channel["id"])
-    previous = state.get(key, {}) if isinstance(state.get(key), dict) else {}
     if not channel["isLow"]:
-        state[key] = {
-            "isLow": False,
-            "lastRecoveredAt": checked_at,
-            "lastNotifiedAt": previous.get("lastNotifiedAt"),
-            "hadRecovery": True,
-        }
+        state[key] = {"isLow": False, "lastRecoveredAt": checked_at}
         return False
 
-    last_notified = previous.get("lastNotifiedAt")
-    had_recovery = bool(previous.get("hadRecovery"))
-    if not last_notified:
-        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": had_recovery}
-        return True
-
-    if had_recovery:
-        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": False}
-        return True
-
-    try:
-        last_time = datetime.fromisoformat(last_notified.replace("Z", "+00:00"))
-        elapsed_hours = (datetime.fromisoformat(checked_at) - last_time).total_seconds() / 3600
-    except Exception:
-        elapsed_hours = COOLDOWN_HOURS + 1
-
-    if elapsed_hours >= COOLDOWN_HOURS:
-        state[key] = {"isLow": True, "lastNotifiedAt": checked_at, "hadRecovery": False}
-        return True
-
-    state[key] = {**previous, "isLow": True, "hadRecovery": had_recovery}
-    return False
+    state[key] = {"isLow": True, "lastNotifiedAt": checked_at}
+    return True
 
 
 def send_telegram(message: str) -> None:
