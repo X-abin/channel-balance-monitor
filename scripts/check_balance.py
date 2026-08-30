@@ -547,8 +547,7 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
 def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
     dashboard_balance = to_number(item.get("balance"))
     balance = None if UPSTREAM_BALANCE_ONLY else dashboard_balance
-    threshold_override = to_number(item.get("lowBalanceThresholdOverride"))
-    threshold = threshold_override if threshold_override is not None else THRESHOLD
+    threshold = THRESHOLD
     channel_id = item.get("id") or item.get("channelId") or item.get("name")
     channel = {
         "id": channel_id,
