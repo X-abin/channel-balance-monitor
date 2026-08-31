@@ -124,6 +124,7 @@ function render(data) {
   if (excludedChannels > 0) skipParts.push(`已排除 ${excludedChannels} 个暂不监测渠道`);
   const skipText = skipParts.length > 0 ? `，${skipParts.join("，")}` : "";
   const failText = data.upstreamBalanceOnly && failedChannels.length > 0 ? `，${failedChannels.length} 个渠道实时读取失败` : "";
+  const sourceText = data.configSource === "backup" ? "后台失败，已使用备用配置。" : "";
   const notifyText = notifiedChannels.length > 0
     ? `，已发送 ${notifiedChannels.length} 条 Telegram 提醒`
     : "，未重复发送 Telegram 提醒";
@@ -141,11 +142,11 @@ function render(data) {
   } else if (lowChannels.length > 0) {
     els.pill.classList.add("warn");
     els.pill.textContent = "需要续费";
-    els.summary.textContent = `发现 ${lowChannels.length} 个星标渠道实时余额低于阈值${skipText}${failText}${notifyText}。`;
+    els.summary.textContent = `${sourceText}发现 ${lowChannels.length} 个星标渠道实时余额低于阈值${skipText}${failText}${notifyText}。`;
   } else {
     els.pill.classList.add("ok");
     els.pill.textContent = "正常";
-    els.summary.textContent = `当前已读取到实时余额的星标渠道都高于提醒阈值${skipText}${failText}。`;
+    els.summary.textContent = `${sourceText}当前已读取到实时余额的星标渠道都高于提醒阈值${skipText}${failText}。`;
   }
 
   els.alertNote.textContent = lowChannels.length > 0 ? "当前只监测后台已星标渠道，余额只使用上游实时数据" : "当前没有低余额星标渠道";

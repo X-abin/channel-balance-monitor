@@ -19,8 +19,51 @@
 | `UPTIME_PASSWORD` | 监测后台登录密码 |
 | `TELEGRAM_BOT_TOKEN` | Telegram 机器人 token |
 | `TELEGRAM_CHAT_ID` | 接收提醒的 Telegram chat id |
+| `CHANNELS_CONFIG_JSON` | 可选。后台掉线时使用的备用渠道配置 |
 
 如果你已经有后台 token，也可以只填 `UPTIME_TOKEN`，不用填 `UPTIME_USERNAME` 和 `UPTIME_PASSWORD`。
+
+## 后台掉线备用配置
+
+平时工具会先从 `https://uptime.maolaoapi.com` 读取星标渠道、上游地址和登录信息，然后再去每个上游站点实时读取余额。
+
+如果这个后台掉线，工具就拿不到渠道名单和登录信息。要让后台掉线时也能继续检测，请在 GitHub Secrets 里新增 `CHANNELS_CONFIG_JSON`，内容格式如下：
+
+```json
+{
+  "channels": [
+    {
+      "id": "渠道ID",
+      "name": "渠道名称",
+      "platform": "Sub2API",
+      "baseUrl": "https://上游地址",
+      "isStarred": true,
+      "username": "上游登录账号",
+      "password": "上游登录密码"
+    }
+  ]
+}
+```
+
+如果某个渠道使用 token 或 refresh token，也可以写：
+
+```json
+{
+  "channels": [
+    {
+      "id": "渠道ID",
+      "name": "渠道名称",
+      "platform": "Sub2API",
+      "baseUrl": "https://上游地址",
+      "isStarred": true,
+      "token": "上游 access token",
+      "refreshToken": "上游 refresh token"
+    }
+  ]
+}
+```
+
+这份配置只放在 GitHub Secrets，不会显示在网页里。
 
 ## Telegram 配置方法
 

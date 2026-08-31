@@ -18,6 +18,7 @@ DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
 DEFAULT_NEWAPI_QUOTA_PER_UNIT = float(os.getenv("NEWAPI_DEFAULT_QUOTA_PER_UNIT", "500000"))
+CHANNELS_CONFIG_JSON = os.getenv("CHANNELS_CONFIG_JSON") or os.getenv("CHANNEL_BACKUP_JSON")
 MANUAL_BASE_URL_OVERRIDES = {
     "23": "https://dzzzz.cf",
     "天才程序员": "https://dzzzz.cf",
@@ -125,6 +126,54 @@ def extract_channels(data: Any) -> list[dict[str, Any]]:
     if isinstance(data, list):
         return data
     raise RuntimeError("接口返回格式不符合预期，没有找到 channels 列表。")
+
+
+def load_backup_channel_items() -> list[dict[str, Any]]:
+    if not CHANNELS_CONFIG_JSON:
+        return []
+    try:
+        data = json.loads(CHANNELS_CONFIG_JSON)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("CHANNELS_CONFIG_JSON 不是有效 JSON，请检查 GitHub Secret 内容。") from exc
+
+    if isinstance(data, dict):
+        if isinstance(data.get("channels"), list):
+            data = data["channels"]
+        elif isinstance(data.get("items"), list):
+            data = data["items"]
+    if not isinstance(data, list):
+        raise RuntimeError("CHANNELS_CONFIG_JSON 需要是渠道数组，或包含 channels 数组。")
+
+    channels = [item for item in data if isinstance(item, dict)]
+    if not channels:
+        raise RuntimeError("CHANNELS_CONFIG_JSON 里没有找到可用渠道。")
+    return channels
+
+
+def map_backup_details(items: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    details: dict[str, dict[str, Any]] = {}
+    for item in items:
+        channel = item.get("channel") if isinstance(item.get("channel"), dict) else item
+        for key in (
+            channel.get("id"),
+            channel.get("channelId"),
+            channel.get("name"),
+            channel.get("channelName"),
+            item.get("id"),
+            item.get("channelId"),
+            item.get("name"),
+            item.get("channelName"),
+        ):
+            if key is not None and str(key):
+                details[str(key)] = item
+    return details
+
+
+def get_backup_detail(channel: dict[str, Any], backup_details: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    for key in (channel.get("id"), channel.get("name")):
+        if key is not None and str(key) in backup_details:
+            return backup_details[str(key)]
+    return None
 
 
 def to_number(value: Any) -> float | None:
@@ -498,11 +547,47 @@ def fetch_newapi_balance(base_url: str, username: str, password: str, auth_token
 
 
 def get_detail_credentials(detail: dict[str, Any], channel: dict[str, Any]) -> tuple[str | None, str | None]:
-    saved_username = detail.get("savedUserName")
-    saved_password = detail.get("savedPassword")
     channel_data = detail.get("channel") if isinstance(detail.get("channel"), dict) else {}
-    username = saved_username or channel_data.get("accountName") or channel.get("accountName") or channel.get("credentialUserName")
-    password = saved_password or channel.get("savedPassword")
+    username = find_text(
+        detail,
+        (
+            "savedUserName",
+            "savedUsername",
+            "username",
+            "userName",
+            "email",
+            "accountName",
+            "credentialUserName",
+        ),
+    ) or find_text(
+        channel_data or channel,
+        (
+            "savedUserName",
+            "savedUsername",
+            "username",
+            "userName",
+            "email",
+            "accountName",
+            "credentialUserName",
+        ),
+    )
+    password = find_text(
+        detail,
+        (
+            "savedPassword",
+            "password",
+            "accountPassword",
+            "credentialPassword",
+        ),
+    ) or find_text(
+        channel_data or channel,
+        (
+            "savedPassword",
+            "password",
+            "accountPassword",
+            "credentialPassword",
+        ),
+    )
     return (str(username).strip() if username else None, str(password).strip() if password else None)
 
 
@@ -552,22 +637,32 @@ def refresh_upstream_balance(channel: dict[str, Any], detail: dict[str, Any]) ->
 
 
 def normalize_channel(item: dict[str, Any]) -> dict[str, Any]:
+    item_channel = item.get("channel") if isinstance(item.get("channel"), dict) else item
     dashboard_balance = to_number(item.get("balance"))
+    if dashboard_balance is None:
+        dashboard_balance = to_number(item_channel.get("balance"))
     balance = None if UPSTREAM_BALANCE_ONLY else dashboard_balance
     threshold = THRESHOLD
-    channel_id = item.get("id") or item.get("channelId") or item.get("name")
+    channel_id = item_channel.get("id") or item_channel.get("channelId") or item_channel.get("name") or item.get("id") or item.get("channelId") or item.get("name")
+    is_starred = item_channel.get("isStarred")
+    if is_starred is None:
+        is_starred = item_channel.get("starred")
+    if is_starred is None:
+        is_starred = item.get("isStarred")
+    if is_starred is None:
+        is_starred = item.get("starred")
     channel = {
         "id": channel_id,
-        "name": str(item.get("name") or item.get("channelName") or channel_id),
-        "platform": item.get("platform"),
-        "baseUrl": item.get("baseUrl"),
-        "isStarred": bool(item.get("isStarred")),
+        "name": str(item_channel.get("name") or item_channel.get("channelName") or item.get("name") or item.get("channelName") or channel_id),
+        "platform": item_channel.get("platform") or item.get("platform"),
+        "baseUrl": item_channel.get("baseUrl") or item.get("baseUrl"),
+        "isStarred": bool(is_starred),
         "balance": balance,
         "balanceSource": "upstream_pending" if UPSTREAM_BALANCE_ONLY else "dashboard",
         "threshold": threshold,
-        "tokenCount": item.get("tokenCount"),
-        "lastSyncedAt": item.get("lastSyncedAt"),
-        "lastSyncError": item.get("lastSyncError"),
+        "tokenCount": item_channel.get("tokenCount") or item.get("tokenCount"),
+        "lastSyncedAt": item_channel.get("lastSyncedAt") or item.get("lastSyncedAt"),
+        "lastSyncError": item_channel.get("lastSyncError") or item.get("lastSyncError"),
         "isLow": balance is not None and balance < threshold,
         "needsLogin": bool(item.get("lastSyncError")),
     }
@@ -633,21 +728,59 @@ def main() -> int:
         "lowChannels": [],
         "skippedChannels": 0,
         "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
+        "configSource": "backend",
+        "backendError": None,
+        "backupConfigError": None,
         "error": None,
     }
 
     try:
-        token = login()
-        data = http_json("/api/channels/search", token=token)
-        all_channels = [normalize_channel(item) for item in extract_channels(data)]
+        backup_config_error = None
+        try:
+            backup_items = load_backup_channel_items()
+        except Exception as exc:
+            backup_config_error = str(exc)
+            backup_items = []
+        backup_details = map_backup_details(backup_items) if backup_items else {}
+        config_source = "backend"
+        backend_error = None
+
+        try:
+            token = login()
+            data = http_json("/api/channels/search", token=token)
+            all_channels = [normalize_channel(item) for item in extract_channels(data)]
+        except Exception as exc:
+            if not backup_items:
+                if backup_config_error:
+                    raise RuntimeError(f"{exc}；备用配置也不可用：{backup_config_error}") from exc
+                raise
+            backend_error = str(exc)
+            config_source = "backup"
+            all_channels = [normalize_channel(item) for item in backup_items]
+
         eligible_channels = [channel for channel in all_channels if not is_excluded_channel(channel)]
         channels = [channel for channel in eligible_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else eligible_channels
         for channel in channels:
             try:
-                detail = http_json(f"/api/channels/{channel['id']}", token=token)
-                if isinstance(detail, dict):
-                    refresh_upstream_balance(channel, detail)
+                if config_source == "backup":
+                    detail = get_backup_detail(channel, backup_details)
+                    if detail is None:
+                        raise RuntimeError("备用配置中没有找到该渠道的登录信息")
+                    channel["configSource"] = "backup"
+                else:
+                    try:
+                        detail = http_json(f"/api/channels/{channel['id']}", token=token)
+                    except Exception as exc:
+                        detail = get_backup_detail(channel, backup_details)
+                        if detail is None:
+                            raise
+                        channel["configSource"] = "backup"
+                        channel["backendDetailError"] = str(exc)
+                if not isinstance(detail, dict):
+                    raise RuntimeError("渠道详情格式不符合预期")
+                refresh_upstream_balance(channel, detail)
             except Exception as exc:
+                channel["balanceSource"] = "upstream_failed"
                 channel["upstreamBalanceError"] = str(exc)
         low_channels = sorted([channel for channel in channels if channel["isLow"]], key=channel_priority)
         failed_channels = sorted([channel for channel in channels if channel.get("balanceSource") == "upstream_failed"], key=channel_priority)
@@ -665,6 +798,10 @@ def main() -> int:
             "failedChannels": failed_channels,
             "monitorStarredOnly": MONITOR_STARRED_ONLY,
             "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
+            "configSource": config_source,
+            "backendError": backend_error,
+            "backupConfigError": backup_config_error,
+            "backupChannelsConfigured": len(backup_items),
             "totalChannels": len(all_channels),
             "skippedChannels": len(all_channels) - len(channels),
             "excludedChannels": len(all_channels) - len(eligible_channels),

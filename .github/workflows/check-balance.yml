@@ -28,6 +28,7 @@ jobs:
           UPTIME_USERNAME: ${{ secrets.UPTIME_USERNAME }}
           UPTIME_PASSWORD: ${{ secrets.UPTIME_PASSWORD }}
           UPTIME_TOKEN: ${{ secrets.UPTIME_TOKEN }}
+          CHANNELS_CONFIG_JSON: ${{ secrets.CHANNELS_CONFIG_JSON }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           BALANCE_THRESHOLD: "30"
