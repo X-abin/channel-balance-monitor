@@ -87,3 +87,7 @@ UPSTREAM_BALANCE_ONLY: "true"
 - `Sub2API`
 - `NewApi`
 - `ThirdParty`
+
+## 暂不监测渠道
+
+当前已临时排除 `阿伟`，不会检测余额，也不会发送 Telegram 提醒。

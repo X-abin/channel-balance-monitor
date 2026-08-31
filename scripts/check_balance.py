@@ -22,6 +22,10 @@ MANUAL_BASE_URL_OVERRIDES = {
     "23": "https://dzzzz.cf",
     "天才程序员": "https://dzzzz.cf",
 }
+EXCLUDED_CHANNELS = {
+    "29",
+    "阿伟",
+}
 DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -175,6 +179,10 @@ def get_manual_base_url_override(channel: dict[str, Any]) -> str | None:
         if override:
             return override
     return None
+
+
+def is_excluded_channel(channel: dict[str, Any]) -> bool:
+    return any(str(key) in EXCLUDED_CHANNELS for key in (channel.get("id"), channel.get("name")))
 
 
 def get_detail_value(detail: dict[str, Any], channel: dict[str, Any], preferred_keys: tuple[str, ...]) -> str | None:
@@ -632,7 +640,8 @@ def main() -> int:
         token = login()
         data = http_json("/api/channels/search", token=token)
         all_channels = [normalize_channel(item) for item in extract_channels(data)]
-        channels = [channel for channel in all_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else all_channels
+        eligible_channels = [channel for channel in all_channels if not is_excluded_channel(channel)]
+        channels = [channel for channel in eligible_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else eligible_channels
         for channel in channels:
             try:
                 detail = http_json(f"/api/channels/{channel['id']}", token=token)
@@ -658,6 +667,7 @@ def main() -> int:
             "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
             "totalChannels": len(all_channels),
             "skippedChannels": len(all_channels) - len(channels),
+            "excludedChannels": len(all_channels) - len(eligible_channels),
         })
         write_json(STATE_PATH, state)
         write_json(STATUS_PATH, status)

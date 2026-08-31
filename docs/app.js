@@ -117,7 +117,12 @@ function render(data) {
   const failedChannels = Array.isArray(data.failedChannels) ? data.failedChannels : channels.filter((channel) => channel.balanceSource === "upstream_failed");
   const starredLowCount = lowChannels.filter((channel) => channel.isStarred).length;
   const skippedChannels = Number(data.skippedChannels || 0);
-  const skipText = data.monitorStarredOnly && skippedChannels > 0 ? `，已跳过 ${skippedChannels} 个未星标渠道` : "";
+  const excludedChannels = Number(data.excludedChannels || 0);
+  const unmonitoredChannels = Math.max(0, skippedChannels - excludedChannels);
+  const skipParts = [];
+  if (data.monitorStarredOnly && unmonitoredChannels > 0) skipParts.push(`已跳过 ${unmonitoredChannels} 个未星标渠道`);
+  if (excludedChannels > 0) skipParts.push(`已排除 ${excludedChannels} 个暂不监测渠道`);
+  const skipText = skipParts.length > 0 ? `，${skipParts.join("，")}` : "";
   const failText = data.upstreamBalanceOnly && failedChannels.length > 0 ? `，${failedChannels.length} 个渠道实时读取失败` : "";
   const notifyText = notifiedChannels.length > 0
     ? `，已发送 ${notifiedChannels.length} 条 Telegram 提醒`
