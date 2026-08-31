@@ -142,6 +142,10 @@
   },
   "95": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-31T05:53:48+00:00"
+    "lastNotifiedAt": "2026-08-31T07:29:05+00:00"
+  },
+  "135": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-08-31T07:29:05+00:00"
   }
 }
