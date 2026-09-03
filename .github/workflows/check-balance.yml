@@ -1,5 +1,9 @@
 name: Check Channel Balance
 
+concurrency:
+  group: channel-balance-monitor
+  cancel-in-progress: false
+
 on:
   schedule:
     - cron: "*/10 * * * *"
