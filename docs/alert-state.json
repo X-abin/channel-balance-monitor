@@ -145,5 +145,13 @@
   "135": {
     "isLow": true,
     "lastNotifiedAt": "2026-08-31T07:35:19+00:00"
+  },
+  "143": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-09-04T05:46:32+00:00"
+  },
+  "142": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-09-04T05:46:32+00:00"
   }
 }
