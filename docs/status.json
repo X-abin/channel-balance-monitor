@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-09-09T00:40:06+00:00",
+  "checkedAt": "2026-09-09T05:02:29+00:00",
   "baseUrl": "https://uptime.maolaoapi.com",
   "threshold": 30.0,
   "channels": [
@@ -10,14 +10,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://1024token.club",
       "isStarred": true,
-      "balance": 152.14644377,
+      "balance": 152.09022862,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.654951+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 1,
@@ -25,14 +26,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ai98pro.xyz",
       "isStarred": true,
-      "balance": 495.90286555,
+      "balance": 478.8475338,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:53.93868+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 40,
@@ -40,14 +42,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.ahooqq.cn",
       "isStarred": true,
-      "balance": 41.71343702,
+      "balance": 36.07343702,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:36:56.018618+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 126,
@@ -58,11 +61,12 @@
       "balance": 47.7904875,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:54.425046+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 39,
@@ -70,14 +74,15 @@
       "platform": "NewApi",
       "baseUrl": "https://apigate.amlkcloud.top",
       "isStarred": true,
-      "balance": 153.62,
+      "balance": 146.12,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:56.280281+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 130,
@@ -85,14 +90,15 @@
       "platform": "NewApi",
       "baseUrl": "https://aiapisplus.com",
       "isStarred": true,
-      "balance": 217.585852,
+      "balance": 209.375036,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:53.724929+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 137,
@@ -103,11 +109,12 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-05T09:58:43.948153+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 403 https://ai.arm.moe/api/v1/auth/login: 返回 HTML 页面，可能被 Cloudflare/验证码拦截。"
     },
     {
@@ -116,14 +123,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.bigsnake.xyz",
       "isStarred": true,
-      "balance": 277.26154276,
+      "balance": 249.91789354,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.736011+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 112,
@@ -131,14 +139,15 @@
       "platform": "NewApi",
       "baseUrl": "https://dragtokens.com",
       "isStarred": true,
-      "balance": 295.704628,
+      "balance": 263.707588,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:36:56.196779+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 31,
@@ -149,11 +158,12 @@
       "balance": 175.85706,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:37:10.337869+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 120,
@@ -164,11 +174,12 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-08-24T03:58:20.200051+00:00",
-      "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 400 Bad Request: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}",
+      "tokenCount": null,
+      "lastSyncedAt": null,
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
+      "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 400 https://subdirect.aicodexvip.top/api/v1/auth/login: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}"
     },
     {
@@ -177,14 +188,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://kocodex.link",
       "isStarred": true,
-      "balance": 85.11097002,
+      "balance": 84.84722555,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:53.952098+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 92,
@@ -192,14 +204,15 @@
       "platform": "NewApi",
       "baseUrl": "https://meinianda.top",
       "isStarred": true,
-      "balance": 151.616,
+      "balance": 146.776,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:37:07.186942+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 95,
@@ -207,14 +220,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://sail.mgrouter.com",
       "isStarred": true,
-      "balance": 656.5637845,
+      "balance": 589.2790225,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 3,
-      "lastSyncedAt": "2026-09-09T00:37:05.222407+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 30,
@@ -222,14 +236,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.onebool.com",
       "isStarred": true,
-      "balance": 621.55041048,
+      "balance": 563.19061898,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:36:57.182973+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 143,
@@ -237,14 +252,15 @@
       "platform": "NewApi",
       "baseUrl": "https://switchbase.vip",
       "isStarred": true,
-      "balance": 771.951844,
+      "balance": 771.865846,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:54.615222+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 47,
@@ -252,14 +268,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://tntapi.com",
       "isStarred": true,
-      "balance": 126.11784352,
+      "balance": 123.72583347,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:37:05.657787+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 125,
@@ -267,14 +284,15 @@
       "platform": "NewApi",
       "baseUrl": "https://tokunex.com",
       "isStarred": true,
-      "balance": 111.033352,
+      "balance": 108.809172,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:37:06.766891+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 85,
@@ -282,14 +300,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.vokly.io",
       "isStarred": true,
-      "balance": 459.70528763,
+      "balance": 440.97514405,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.990742+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 28,
@@ -297,14 +316,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://wahaapi.top",
       "isStarred": true,
-      "balance": 202.1578025,
+      "balance": 183.78118991,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.219826+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 8,
@@ -315,11 +335,12 @@
       "balance": 1942.97476597,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:53.139546+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 5,
@@ -327,14 +348,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://us.zhima.world",
       "isStarred": true,
-      "balance": 515.75875046,
+      "balance": 515.72794196,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:36:54.720397+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 26,
@@ -342,14 +364,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://sub2api.relaybases.com",
       "isStarred": true,
-      "balance": 159.48676246,
+      "balance": 141.68554135,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:53.942012+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 135,
@@ -357,14 +380,15 @@
       "platform": "NewApi",
       "baseUrl": "https://zzshu.cc",
       "isStarred": true,
-      "balance": 282.673116,
+      "balance": 276.697812,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:37:06.130375+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 93,
@@ -372,14 +396,15 @@
       "platform": "NewApi",
       "baseUrl": "https://dltokenapi.com",
       "isStarred": true,
-      "balance": 2359.812708,
+      "balance": 2356.683816,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:54.933945+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 23,
@@ -387,14 +412,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://dzzzz.cf",
       "isStarred": true,
-      "balance": 487.8889058747,
+      "balance": 380.4338838587,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:37:06.727445+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 140,
@@ -402,14 +428,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://yuzhiapi.xyz",
       "isStarred": true,
-      "balance": 89.31846488,
+      "balance": 88.62479076,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:55.050538+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 141,
@@ -417,14 +444,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://mhapi.net",
       "isStarred": true,
-      "balance": 520.60803789,
+      "balance": 261.25372097,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-09-09T00:36:54.306755+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 142,
@@ -432,14 +460,15 @@
       "platform": "NewApi",
       "baseUrl": "https://fushengyunsuan.cn",
       "isStarred": true,
-      "balance": 474.965468,
+      "balance": 398.022224,
       "balanceSource": "upstream",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-09-09T00:36:55.756736+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup"
     },
     {
       "id": 37,
@@ -450,18 +479,19 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.72466+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 400 https://plus.9988712.xyz/api/v1/auth/login: {\"code\":400,\"message\":\"turnstile verification failed\",\"reason\":\"TURNSTILE_VERIFICATION_FAILED\"}"
     }
   ],
   "lowChannels": [],
-  "skippedChannels": 21,
+  "skippedChannels": 0,
   "upstreamBalanceOnly": true,
-  "configSource": "backend",
+  "configSource": "fixed",
   "backendError": null,
   "backupConfigError": null,
   "error": null,
@@ -476,11 +506,12 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-05T09:58:43.948153+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 403 https://ai.arm.moe/api/v1/auth/login: 返回 HTML 页面，可能被 Cloudflare/验证码拦截。"
     },
     {
@@ -492,11 +523,12 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 1,
-      "lastSyncedAt": "2026-08-24T03:58:20.200051+00:00",
-      "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 400 Bad Request: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}",
+      "tokenCount": null,
+      "lastSyncedAt": null,
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
+      "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 400 https://subdirect.aicodexvip.top/api/v1/auth/login: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}"
     },
     {
@@ -508,16 +540,17 @@
       "balance": null,
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
-      "tokenCount": 2,
-      "lastSyncedAt": "2026-09-09T00:36:54.72466+00:00",
+      "tokenCount": null,
+      "lastSyncedAt": null,
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
+      "configSource": "backup",
       "upstreamBalanceError": "HTTP 400 https://plus.9988712.xyz/api/v1/auth/login: {\"code\":400,\"message\":\"turnstile verification failed\",\"reason\":\"TURNSTILE_VERIFICATION_FAILED\"}"
     }
   ],
-  "monitorStarredOnly": true,
-  "backupChannelsConfigured": 0,
-  "totalChannels": 51,
-  "excludedChannels": 1
+  "monitorStarredOnly": false,
+  "backupChannelsConfigured": 30,
+  "totalChannels": 30,
+  "excludedChannels": 0
 }
