@@ -742,27 +742,29 @@ def main() -> int:
             backup_config_error = str(exc)
             backup_items = []
         backup_details = map_backup_details(backup_items) if backup_items else {}
-        config_source = "backend"
+        config_source = "fixed" if backup_items else "backend"
         backend_error = None
 
-        try:
-            token = login()
-            data = http_json("/api/channels/search", token=token)
-            all_channels = [normalize_channel(item) for item in extract_channels(data)]
-        except Exception as exc:
-            if not backup_items:
-                if backup_config_error:
-                    raise RuntimeError(f"{exc}；备用配置也不可用：{backup_config_error}") from exc
-                raise
-            backend_error = str(exc)
-            config_source = "backup"
+        if backup_items:
+            # The fixed upstream list is authoritative so the monitor keeps working
+            # when the dashboard is logged out or temporarily unavailable.
+            token = None
             all_channels = [normalize_channel(item) for item in backup_items]
+        else:
+            try:
+                token = login()
+                data = http_json("/api/channels/search", token=token)
+                all_channels = [normalize_channel(item) for item in extract_channels(data)]
+            except Exception as exc:
+                if backup_config_error:
+                    raise RuntimeError(f"{exc}；固定配置也不可用：{backup_config_error}") from exc
+                raise
 
         eligible_channels = [channel for channel in all_channels if not is_excluded_channel(channel)]
         channels = [channel for channel in eligible_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else eligible_channels
         for channel in channels:
             try:
-                if config_source == "backup":
+                if config_source == "fixed":
                     detail = get_backup_detail(channel, backup_details)
                     if detail is None:
                         raise RuntimeError("备用配置中没有找到该渠道的登录信息")
