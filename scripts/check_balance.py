@@ -26,6 +26,8 @@ MANUAL_BASE_URL_OVERRIDES = {
 EXCLUDED_CHANNELS = {
     "29",
     "阿伟",
+    "95",
+    "Mgrouter",
 }
 DEFAULT_HEADERS = {
     "Accept": "application/json",
