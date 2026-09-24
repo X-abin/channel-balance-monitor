@@ -14,6 +14,7 @@ THRESHOLD = float(os.getenv("BALANCE_THRESHOLD", "30"))
 UPSTREAM_BALANCE_ENABLED = os.getenv("UPSTREAM_BALANCE_ENABLED", "true").strip().lower() not in {"0", "false", "no"}
 UPSTREAM_BALANCE_ONLY = os.getenv("UPSTREAM_BALANCE_ONLY", "true").strip().lower() not in {"0", "false", "no"}
 MONITOR_STARRED_ONLY = os.getenv("MONITOR_STARRED_ONLY", "true").strip().lower() not in {"0", "false", "no"}
+PREFER_BACKEND_CHANNELS = os.getenv("PREFER_BACKEND_CHANNELS", "false").strip().lower() not in {"0", "false", "no"}
 DOCS_DIR = Path("docs")
 STATUS_PATH = DOCS_DIR / "status.json"
 STATE_PATH = DOCS_DIR / "alert-state.json"
@@ -749,7 +750,7 @@ def main() -> int:
         config_source = "fixed" if backup_items else "backend"
         backend_error = None
 
-        if backup_items:
+        if backup_items and not PREFER_BACKEND_CHANNELS:
             # The fixed upstream list is authoritative so the monitor keeps working
             # when the dashboard is logged out or temporarily unavailable.
             token = None
@@ -759,10 +760,16 @@ def main() -> int:
                 token = login()
                 data = http_json("/api/channels/search", token=token)
                 all_channels = [normalize_channel(item) for item in extract_channels(data)]
+                config_source = "backend"
             except Exception as exc:
-                if backup_config_error:
-                    raise RuntimeError(f"{exc}；固定配置也不可用：{backup_config_error}") from exc
-                raise
+                if not backup_items:
+                    if backup_config_error:
+                        raise RuntimeError(f"{exc}；固定配置也不可用：{backup_config_error}") from exc
+                    raise
+                backend_error = str(exc)
+                token = None
+                config_source = "fixed"
+                all_channels = [normalize_channel(item) for item in backup_items]
 
         eligible_channels = [channel for channel in all_channels if not is_excluded_channel(channel)]
         channels = [channel for channel in eligible_channels if channel["isStarred"]] if MONITOR_STARRED_ONLY else eligible_channels
@@ -803,6 +810,7 @@ def main() -> int:
             "notifiedChannels": notify_channels,
             "failedChannels": failed_channels,
             "monitorStarredOnly": MONITOR_STARRED_ONLY,
+            "preferBackendChannels": PREFER_BACKEND_CHANNELS,
             "upstreamBalanceOnly": UPSTREAM_BALANCE_ONLY,
             "configSource": config_source,
             "backendError": backend_error,
