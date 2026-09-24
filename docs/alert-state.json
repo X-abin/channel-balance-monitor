@@ -69,7 +69,7 @@
   },
   "101": {
     "isLow": true,
-    "lastNotifiedAt": "2026-08-20T06:30:35+00:00"
+    "lastNotifiedAt": "2026-09-24T02:44:24+00:00"
   },
   "96": {
     "isLow": true,
@@ -171,5 +171,9 @@
   "8": {
     "isLow": true,
     "lastNotifiedAt": "2026-09-15T10:06:26+00:00"
+  },
+  "172": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-09-24T02:44:24+00:00"
   }
 }
