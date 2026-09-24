@@ -28,6 +28,8 @@ EXCLUDED_CHANNELS = {
     "阿伟",
     "95",
     "Mgrouter",
+    "126",
+    "aihub",
 }
 DEFAULT_HEADERS = {
     "Accept": "application/json",
