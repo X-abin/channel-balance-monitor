@@ -21,7 +21,7 @@
   },
   "112": {
     "isLow": true,
-    "lastNotifiedAt": "2026-10-09T06:15:19+00:00"
+    "lastNotifiedAt": "2026-10-10T08:25:13+00:00"
   },
   "24": {
     "isLow": true,
@@ -57,7 +57,7 @@
   },
   "5": {
     "isLow": true,
-    "lastNotifiedAt": "2026-10-10T02:07:15+00:00"
+    "lastNotifiedAt": "2026-10-10T08:25:13+00:00"
   },
   "115": {
     "isLow": true,
@@ -166,7 +166,7 @@
   },
   "47": {
     "isLow": true,
-    "lastNotifiedAt": "2026-10-06T19:44:10+00:00"
+    "lastNotifiedAt": "2026-10-10T08:25:13+00:00"
   },
   "8": {
     "isLow": true,
@@ -178,7 +178,7 @@
   },
   "159": {
     "isLow": true,
-    "lastNotifiedAt": "2026-10-09T06:15:19+00:00"
+    "lastNotifiedAt": "2026-10-10T08:25:13+00:00"
   },
   "173": {
     "isLow": true,
@@ -190,6 +190,6 @@
   },
   "158": {
     "isLow": true,
-    "lastNotifiedAt": "2026-10-09T22:58:20+00:00"
+    "lastNotifiedAt": "2026-10-10T08:25:13+00:00"
   }
 }
