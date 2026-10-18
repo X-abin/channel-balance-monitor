@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "checkedAt": "2026-10-18T18:57:59+00:00",
+  "checkedAt": "2026-10-18T21:16:05+00:00",
   "baseUrl": "https://uptime.maolaoapi.com",
   "threshold": 30.0,
   "channels": [
@@ -10,14 +10,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://1024token.club",
       "isStarred": true,
-      "balance": 149.84341456,
+      "balance": 149.84291016,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
       "lastSyncedAt": "2026-10-18T18:46:25.448543+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/133: "
     },
     {
       "id": 1,
@@ -25,14 +27,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ai98pro.xyz",
       "isStarred": true,
-      "balance": 2699.25515358,
+      "balance": 2681.80578671,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-10-18T18:48:42.265929+00:00",
+      "lastSyncedAt": "2026-10-18T21:09:21.306793+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/1: "
     },
     {
       "id": 87,
@@ -40,7 +44,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://ageteam.online",
       "isStarred": true,
-      "balance": 333.764000223,
+      "balance": 332.493279083,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 3,
@@ -55,14 +59,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.ahooqq.cn",
       "isStarred": true,
-      "balance": 241.61416094,
+      "balance": 240.93241184,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 5,
       "lastSyncedAt": "2026-09-29T14:12:38.156866+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/40: "
     },
     {
       "id": 39,
@@ -70,7 +76,7 @@
       "platform": "NewApi",
       "baseUrl": "https://apigate.amlkcloud.top",
       "isStarred": true,
-      "balance": 171.28,
+      "balance": 168.88,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
@@ -91,7 +97,7 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:46.929416+00:00",
+      "lastSyncedAt": "2026-10-18T21:10:29.223345+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
@@ -109,10 +115,10 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:43.469547+00:00",
-      "lastSyncError": null,
+      "lastSyncedAt": "2026-10-18T21:09:21.973464+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": true
     },
     {
       "id": 127,
@@ -120,7 +126,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.bigsnake.xyz",
       "isStarred": true,
-      "balance": 760.24524004,
+      "balance": 750.10082752,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
@@ -153,14 +159,15 @@
       "platform": "NewApi",
       "baseUrl": "https://oneapi.gemiaude.com",
       "isStarred": true,
-      "balance": 121.586616,
-      "balanceSource": "upstream",
+      "balance": null,
+      "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:51.810262+00:00",
+      "lastSyncedAt": "2026-10-18T21:10:33.992554+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/153: "
     },
     {
       "id": 112,
@@ -168,14 +175,16 @@
       "platform": "NewApi",
       "baseUrl": "https://dragtokens.com",
       "isStarred": true,
-      "balance": 393.152576,
+      "balance": 392.266888,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 5,
-      "lastSyncedAt": "2026-10-18T18:25:52.12312+00:00",
+      "lastSyncedAt": "2026-10-18T21:04:35.959507+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/112: "
     },
     {
       "id": 31,
@@ -191,6 +200,8 @@
       "lastSyncError": "NewAPI 获取令牌列表失败，请检查个人中心令牌权限和上游地址。The request was canceled due to the configured HttpClient.Timeout of 100 seconds elapsing.",
       "isLow": false,
       "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/31: ",
       "upstreamBalanceError": "请求失败 https://fafabbb.com/api/user/login: timed out"
     },
     {
@@ -199,14 +210,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://fitrouter.ai",
       "isStarred": true,
-      "balance": 109.55606345,
-      "balanceSource": "upstream",
+      "balance": null,
+      "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 3,
       "lastSyncedAt": "2026-10-18T11:30:18.301266+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/155: "
     },
     {
       "id": 120,
@@ -222,6 +234,8 @@
       "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 400 Bad Request: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}",
       "isLow": false,
       "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/120: ",
       "upstreamBalanceError": "HTTP 400 https://subdirect.aicodexvip.top/api/v1/auth/login: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}"
     },
     {
@@ -230,16 +244,14 @@
       "platform": "Sub2Api",
       "baseUrl": "https://kocodex.link",
       "isStarred": true,
-      "balance": 245.44834448,
+      "balance": 245.34436958,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
       "lastSyncedAt": "2026-10-17T21:28:19.940591+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false,
-      "configSource": "backup",
-      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/12: "
+      "needsLogin": false
     },
     {
       "id": 92,
@@ -247,14 +259,16 @@
       "platform": "NewApi",
       "baseUrl": "https://meinianda.top",
       "isStarred": true,
-      "balance": 415.182146,
+      "balance": 411.810928,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
       "lastSyncedAt": "2026-10-18T16:11:49.508265+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/92: "
     },
     {
       "id": 175,
@@ -262,14 +276,15 @@
       "platform": "NewApi",
       "baseUrl": "https://aimoniker.top",
       "isStarred": true,
-      "balance": 241.539708,
-      "balanceSource": "upstream",
+      "balance": null,
+      "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 7,
-      "lastSyncedAt": "2026-10-18T18:48:51.15307+00:00",
-      "lastSyncError": null,
+      "lastSyncedAt": "2026-10-18T20:41:22.432863+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/175: "
     },
     {
       "id": 30,
@@ -277,7 +292,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.onebool.com",
       "isStarred": true,
-      "balance": 114.14187552,
+      "balance": 110.4372003,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 6,
@@ -296,7 +311,7 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-10-18T18:25:06.18744+00:00",
+      "lastSyncedAt": "2026-10-18T19:34:53.535124+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
@@ -308,14 +323,15 @@
       "platform": "Sub2Api",
       "baseUrl": "https://rapidapi.cc",
       "isStarred": true,
-      "balance": 56.10576209,
-      "balanceSource": "upstream",
+      "balance": null,
+      "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 2,
       "lastSyncedAt": "2026-09-22T13:20:16.63727+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/170: "
     },
     {
       "id": 159,
@@ -323,7 +339,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://cn-api.smartkey.fun",
       "isStarred": true,
-      "balance": 504.50014438,
+      "balance": 501.13033737,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
@@ -338,14 +354,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://tntapi.com",
       "isStarred": true,
-      "balance": 351.20518031,
+      "balance": 348.77887684,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-10-18T18:48:50.090298+00:00",
+      "lastSyncedAt": "2026-10-18T21:09:24.342926+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/47: "
     },
     {
       "id": 125,
@@ -373,10 +391,10 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T17:59:39.567619+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "lastSyncedAt": "2026-10-18T21:09:25.075579+00:00",
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
+      "needsLogin": false,
       "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/158: "
     },
     {
@@ -385,14 +403,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://api.vokly.io",
       "isStarred": true,
-      "balance": 222.55771265,
+      "balance": 222.55144077,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:42.893986+00:00",
+      "lastSyncedAt": "2026-10-18T19:09:23.856162+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/85: "
     },
     {
       "id": 28,
@@ -400,11 +420,11 @@
       "platform": "Sub2Api",
       "baseUrl": "https://wahaapi.top",
       "isStarred": true,
-      "balance": 38.33156981,
+      "balance": 38.28927023,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:47.026734+00:00",
+      "lastSyncedAt": "2026-10-18T19:09:28.308827+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false
@@ -419,10 +439,12 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-17T21:29:59.017979+00:00",
+      "lastSyncedAt": "2026-10-18T19:55:03.164062+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/8: "
     },
     {
       "id": 5,
@@ -430,7 +452,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://us.zhima.world",
       "isStarred": true,
-      "balance": 268.37640413,
+      "balance": 265.29531213,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 5,
@@ -447,14 +469,14 @@
       "platform": "NewApi",
       "baseUrl": "https://codexapis.com",
       "isStarred": true,
-      "balance": 126.26438,
+      "balance": 126.087062,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:46:28.728685+00:00",
-      "lastSyncError": null,
+      "lastSyncedAt": "2026-10-18T21:04:30.550519+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": true
     },
     {
       "id": 172,
@@ -462,14 +484,15 @@
       "platform": "NewApi",
       "baseUrl": "https://aiyunrouter.com",
       "isStarred": true,
-      "balance": 226.934616,
-      "balanceSource": "upstream",
+      "balance": null,
+      "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
       "lastSyncedAt": "2026-10-18T15:21:01.87146+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/172: "
     },
     {
       "id": 26,
@@ -477,7 +500,7 @@
       "platform": "Sub2Api",
       "baseUrl": "https://sub2api.relaybases.com",
       "isStarred": true,
-      "balance": 323.29010499,
+      "balance": 320.751735,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
@@ -498,11 +521,11 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:48.646274+00:00",
+      "lastSyncedAt": "2026-10-18T21:11:37.514396+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
-      "upstreamBalanceError": "reCAPTCHA token 为空"
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/173: "
     },
     {
       "id": 135,
@@ -510,7 +533,7 @@
       "platform": "NewApi",
       "baseUrl": "https://usdj.zzshu.cc",
       "isStarred": true,
-      "balance": 785.609474,
+      "balance": 780.648732,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 8,
@@ -525,17 +548,14 @@
       "platform": "NewApi",
       "baseUrl": "https://dltokenapi.com",
       "isStarred": true,
-      "balance": null,
-      "balanceSource": "upstream_failed",
+      "balance": 3962.759472,
+      "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
-      "lastSyncedAt": "2026-10-18T18:46:26.498978+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "lastSyncedAt": "2026-10-18T21:10:28.224381+00:00",
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
-      "configSource": "backup",
-      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/93: ",
-      "upstreamBalanceError": "用户名或密码错误，或用户已被封禁"
+      "needsLogin": false
     },
     {
       "id": 23,
@@ -551,8 +571,6 @@
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
       "needsLogin": true,
-      "configSource": "backup",
-      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/23: ",
       "upstreamBalanceError": "请求失败 https://dzzzz.cf/api/v1/auth/login: [Errno -2] Name or service not known"
     },
     {
@@ -565,7 +583,7 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:47.244021+00:00",
+      "lastSyncedAt": "2026-10-18T21:10:29.851332+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false
@@ -580,7 +598,7 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:43.637344+00:00",
+      "lastSyncedAt": "2026-10-18T21:09:22.839108+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
@@ -600,7 +618,7 @@
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
-      "upstreamBalanceError": "Turnstile token is empty"
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/174: "
     },
     {
       "id": 141,
@@ -608,14 +626,16 @@
       "platform": "Sub2Api",
       "baseUrl": "https://mhapi.net",
       "isStarred": true,
-      "balance": 262.95387019,
+      "balance": 262.35298757,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 4,
       "lastSyncedAt": "2026-10-17T21:28:20.243041+00:00",
       "lastSyncError": null,
       "isLow": false,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/141: "
     },
     {
       "id": 142,
@@ -623,14 +643,14 @@
       "platform": "NewApi",
       "baseUrl": "https://fushengyunsuan.cn",
       "isStarred": true,
-      "balance": 241.384958,
+      "balance": 241.058926,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:21:33.377108+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "lastSyncedAt": "2026-10-18T20:15:12.563995+00:00",
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true
+      "needsLogin": false
     },
     {
       "id": 167,
@@ -642,7 +662,7 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:00:42.705401+00:00",
+      "lastSyncedAt": "2026-10-18T21:08:44.019018+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false
@@ -653,11 +673,11 @@
       "platform": "NewApi",
       "baseUrl": "https://www.huyunapi.com",
       "isStarred": true,
-      "balance": 146.42612,
+      "balance": 144.444696,
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:25:06.872789+00:00",
+      "lastSyncedAt": "2026-10-18T21:11:37.817562+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false
@@ -672,10 +692,10 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-10-18T04:43:02.041399+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "lastSyncedAt": "2026-10-18T20:15:10.543406+00:00",
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
+      "needsLogin": false,
       "configSource": "backup",
       "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/37: ",
       "upstreamBalanceError": "HTTP 400 https://sqhtoken.com/api/v1/auth/login: {\"code\":400,\"message\":\"turnstile verification failed\",\"reason\":\"TURNSTILE_VERIFICATION_FAILED\"}"
@@ -692,10 +712,12 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-17T21:29:59.017979+00:00",
+      "lastSyncedAt": "2026-10-18T19:55:03.164062+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/8: "
     },
     {
       "id": 176,
@@ -707,10 +729,10 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:43.469547+00:00",
-      "lastSyncError": null,
+      "lastSyncedAt": "2026-10-18T21:09:21.973464+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": true
     }
   ],
   "skippedChannels": 25,
@@ -730,10 +752,12 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-17T21:29:59.017979+00:00",
+      "lastSyncedAt": "2026-10-18T19:55:03.164062+00:00",
       "lastSyncError": null,
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": false,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/8: "
     },
     {
       "id": 176,
@@ -745,10 +769,10 @@
       "balanceSource": "upstream",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:43.469547+00:00",
-      "lastSyncError": null,
+      "lastSyncedAt": "2026-10-18T21:09:21.973464+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": true,
-      "needsLogin": false
+      "needsLogin": true
     }
   ],
   "failedChannels": [
@@ -762,7 +786,7 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:46.929416+00:00",
+      "lastSyncedAt": "2026-10-18T21:10:29.223345+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
@@ -787,6 +811,22 @@
       "upstreamBalanceError": "请求失败 https://claudeapi.ai/api/v1/auth/login: [Errno -5] No address associated with hostname"
     },
     {
+      "id": 153,
+      "name": "CookingAI",
+      "platform": "NewApi",
+      "baseUrl": "https://oneapi.gemiaude.com",
+      "isStarred": true,
+      "balance": null,
+      "balanceSource": "upstream_failed",
+      "threshold": 30.0,
+      "tokenCount": 1,
+      "lastSyncedAt": "2026-10-18T21:10:33.992554+00:00",
+      "lastSyncError": null,
+      "isLow": false,
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/153: "
+    },
+    {
       "id": 31,
       "name": "fafaccc",
       "platform": "NewApi",
@@ -800,7 +840,25 @@
       "lastSyncError": "NewAPI 获取令牌列表失败，请检查个人中心令牌权限和上游地址。The request was canceled due to the configured HttpClient.Timeout of 100 seconds elapsing.",
       "isLow": false,
       "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/31: ",
       "upstreamBalanceError": "请求失败 https://fafabbb.com/api/user/login: timed out"
+    },
+    {
+      "id": 155,
+      "name": "fitrouter  微信陈局",
+      "platform": "Sub2Api",
+      "baseUrl": "https://fitrouter.ai",
+      "isStarred": true,
+      "balance": null,
+      "balanceSource": "upstream_failed",
+      "threshold": 30.0,
+      "tokenCount": 3,
+      "lastSyncedAt": "2026-10-18T11:30:18.301266+00:00",
+      "lastSyncError": null,
+      "isLow": false,
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/155: "
     },
     {
       "id": 120,
@@ -816,7 +874,25 @@
       "lastSyncError": "Sub2API 登录失败，请检查账号/密码和上游地址。/api/v1/auth/login 返回 400 Bad Request: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}",
       "isLow": false,
       "needsLogin": true,
+      "configSource": "backup",
+      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/120: ",
       "upstreamBalanceError": "HTTP 400 https://subdirect.aicodexvip.top/api/v1/auth/login: {\"code\":400,\"message\":\"aliyun captcha verification failed\",\"reason\":\"ALIYUN_CAPTCHA_VERIFICATION_FAILED\"}"
+    },
+    {
+      "id": 175,
+      "name": "moniker",
+      "platform": "NewApi",
+      "baseUrl": "https://aimoniker.top",
+      "isStarred": true,
+      "balance": null,
+      "balanceSource": "upstream_failed",
+      "threshold": 30.0,
+      "tokenCount": 7,
+      "lastSyncedAt": "2026-10-18T20:41:22.432863+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "isLow": false,
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/175: "
     },
     {
       "id": 156,
@@ -828,11 +904,27 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-10-18T18:25:06.18744+00:00",
+      "lastSyncedAt": "2026-10-18T19:34:53.535124+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
       "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/156: "
+    },
+    {
+      "id": 170,
+      "name": "RaridAPI",
+      "platform": "Sub2Api",
+      "baseUrl": "https://rapidapi.cc",
+      "isStarred": true,
+      "balance": null,
+      "balanceSource": "upstream_failed",
+      "threshold": 30.0,
+      "tokenCount": 2,
+      "lastSyncedAt": "2026-09-22T13:20:16.63727+00:00",
+      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "isLow": false,
+      "needsLogin": true,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/170: "
     },
     {
       "id": 125,
@@ -860,11 +952,27 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T17:59:39.567619+00:00",
+      "lastSyncedAt": "2026-10-18T21:09:25.075579+00:00",
+      "lastSyncError": null,
+      "isLow": false,
+      "needsLogin": false,
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/158: "
+    },
+    {
+      "id": 172,
+      "name": "加菲猫",
+      "platform": "NewApi",
+      "baseUrl": "https://aiyunrouter.com",
+      "isStarred": true,
+      "balance": null,
+      "balanceSource": "upstream_failed",
+      "threshold": 30.0,
+      "tokenCount": 1,
+      "lastSyncedAt": "2026-10-18T15:21:01.87146+00:00",
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
       "needsLogin": true,
-      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/158: "
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/172: "
     },
     {
       "id": 173,
@@ -876,29 +984,11 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 1,
-      "lastSyncedAt": "2026-10-18T18:48:48.646274+00:00",
+      "lastSyncedAt": "2026-10-18T21:11:37.514396+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
-      "upstreamBalanceError": "reCAPTCHA token 为空"
-    },
-    {
-      "id": 93,
-      "name": "大浪API",
-      "platform": "NewApi",
-      "baseUrl": "https://dltokenapi.com",
-      "isStarred": true,
-      "balance": null,
-      "balanceSource": "upstream_failed",
-      "threshold": 30.0,
-      "tokenCount": 4,
-      "lastSyncedAt": "2026-10-18T18:46:26.498978+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
-      "isLow": false,
-      "needsLogin": true,
-      "configSource": "backup",
-      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/93: ",
-      "upstreamBalanceError": "用户名或密码错误，或用户已被封禁"
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/173: "
     },
     {
       "id": 23,
@@ -914,8 +1004,6 @@
       "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
       "isLow": false,
       "needsLogin": true,
-      "configSource": "backup",
-      "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/23: ",
       "upstreamBalanceError": "请求失败 https://dzzzz.cf/api/v1/auth/login: [Errno -2] Name or service not known"
     },
     {
@@ -928,7 +1016,7 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 2,
-      "lastSyncedAt": "2026-10-18T18:48:43.637344+00:00",
+      "lastSyncedAt": "2026-10-18T21:09:22.839108+00:00",
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
@@ -948,7 +1036,7 @@
       "lastSyncError": null,
       "isLow": false,
       "needsLogin": false,
-      "upstreamBalanceError": "Turnstile token is empty"
+      "upstreamBalanceError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/174: "
     },
     {
       "id": 37,
@@ -960,10 +1048,10 @@
       "balanceSource": "upstream_failed",
       "threshold": 30.0,
       "tokenCount": 3,
-      "lastSyncedAt": "2026-10-18T04:43:02.041399+00:00",
-      "lastSyncError": "A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.",
+      "lastSyncedAt": "2026-10-18T20:15:10.543406+00:00",
+      "lastSyncError": null,
       "isLow": false,
-      "needsLogin": true,
+      "needsLogin": false,
       "configSource": "backup",
       "backendDetailError": "HTTP 500 https://uptime.maolaoapi.com/api/channels/37: ",
       "upstreamBalanceError": "HTTP 400 https://sqhtoken.com/api/v1/auth/login: {\"code\":400,\"message\":\"turnstile verification failed\",\"reason\":\"TURNSTILE_VERIFICATION_FAILED\"}"
