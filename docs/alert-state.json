@@ -219,5 +219,9 @@
   "189": {
     "isLow": true,
     "lastNotifiedAt": "2026-10-22T17:36:15+00:00"
+  },
+  "345": {
+    "isLow": true,
+    "lastNotifiedAt": "2026-10-26T14:08:52+00:00"
   }
 }
